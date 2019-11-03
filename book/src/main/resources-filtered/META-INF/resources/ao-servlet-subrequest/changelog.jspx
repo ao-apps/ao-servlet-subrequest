@@ -36,6 +36,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2019-10-22T23:22:58-0500"
+		dateModified="2019-11-03T02:12:52-0600"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-servlet-subrequest:pom.version}" />
@@ -53,6 +54,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Pulled Servlet subrequest utilities of <ao:a href="https://semanticcms.com/core/servlet/">SemanticCMS Core Servlet</ao:a>.</li>
+					<li>Minimum Java version changed from 1.7 to 1.8.</li>
 					<li>
 						Added new interfaces that define some methods to access information captured during subrequests,
 						for commonality between different forms of subrequest (single-threaded versus concurrent).
