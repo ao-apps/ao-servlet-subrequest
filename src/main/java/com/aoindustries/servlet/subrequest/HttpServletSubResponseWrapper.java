@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -56,7 +56,7 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 
 	@Override
 	public void setContentLength(int len) {
-		setIntHeader("Content-Length", len);
+		setIntHeader("content-length", len);
 	}
 
 	/**
