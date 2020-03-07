@@ -35,8 +35,6 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 	<properties>
 		<!-- These values are copied from the project being documented -->
 		<documented.artifactId>ao-servlet-subrequest</documented.artifactId>
-		<documented.javaVersion>1.8</documented.javaVersion>
-		<documented.javac.link.javaApi>${javac.link.javaApi.jdk8}</documented.javac.link.javaApi>
 		<documented.name>AO Servlet Subrequest</documented.name>
 		<documented.description>Servlet sub-request wrappers with optional concurrency.</documented.description>
 
