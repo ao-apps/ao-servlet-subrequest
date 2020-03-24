@@ -30,7 +30,7 @@ Servlet sub-request wrappers with optional concurrency.
 * [Project Home](https://aoindustries.com/ao-servlet-subrequest/)
 * [Changelog](https://aoindustries.com/ao-servlet-subrequest/changelog)
 * [API Docs](https://aoindustries.com/ao-servlet-subrequest/apidocs/)
-* [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-servlet-subrequest%22)
+* [Maven Central Repository](https://search.maven.org/artifact/com.aoindustries/ao-servlet-subrequest)
 * [GitHub](https://github.com/aoindustries/ao-servlet-subrequest)
 
 ## Contact Us
