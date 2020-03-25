@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -194,13 +194,13 @@ public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper imple
 	@Override
 	@SuppressWarnings("deprecation")
 	public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public void login(String username, String password) throws ServletException {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override

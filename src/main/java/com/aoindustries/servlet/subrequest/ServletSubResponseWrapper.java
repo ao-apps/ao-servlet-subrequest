@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2017, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,11 +22,11 @@
  */
 package com.aoindustries.servlet.subrequest;
 
+import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.buffer.BufferResult;
 import com.aoindustries.io.buffer.BufferWriter;
 import com.aoindustries.io.buffer.EmptyResult;
 import com.aoindustries.tempfiles.TempFileContext;
-import com.aoindustries.util.WrappedException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -80,7 +80,7 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
 	@Override
 	@SuppressWarnings("deprecation")
 	public ServletOutputStream getOutputStream() throws IOException {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	private BufferWriter capturedOut;

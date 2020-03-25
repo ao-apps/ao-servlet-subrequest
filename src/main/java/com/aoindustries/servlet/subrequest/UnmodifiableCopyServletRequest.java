@@ -145,7 +145,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	@Override
 	@SuppressWarnings("deprecation")
 	public ServletInputStream getInputStream() throws IOException {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	@Override
 	@SuppressWarnings("deprecation")
 	public BufferedReader getReader() throws IOException {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override

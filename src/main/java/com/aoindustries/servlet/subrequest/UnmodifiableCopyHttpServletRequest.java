@@ -264,13 +264,13 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
 	@Override
 	@SuppressWarnings("deprecation")
 	public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public void login(String username, String password) throws ServletException {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override

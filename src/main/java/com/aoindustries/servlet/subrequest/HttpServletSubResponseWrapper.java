@@ -149,13 +149,13 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 	@Override
 	@SuppressWarnings("deprecation")
 	public void setDateHeader(String name, long date) {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public void addDateHeader(String name, long date) {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override

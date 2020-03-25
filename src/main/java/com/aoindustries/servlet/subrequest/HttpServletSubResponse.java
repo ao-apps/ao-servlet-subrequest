@@ -142,13 +142,13 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 	@Override
 	@SuppressWarnings("deprecation")
 	public void setDateHeader(String name, long date) {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public void addDateHeader(String name, long date) {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 	}
 
 	@Override
