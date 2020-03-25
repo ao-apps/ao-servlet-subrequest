@@ -32,6 +32,11 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 	<groupId>com.aoindustries</groupId><artifactId>ao-servlet-subrequest</artifactId><version>1.0.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
+	<properties>
+		<!-- Dependencies -->
+		<org.apache.commons:commons-lang3:version>3.9</org.apache.commons:commons-lang3:version>
+	</properties>
+
 	<name>AO Servlet Subrequest</name>
 	<url>https://aoindustries.com/ao-servlet-subrequest/</url>
 	<description>Servlet sub-request wrappers with optional concurrency.</description>
@@ -62,6 +67,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 								<link>https://aoindustries.com/ao-io-buffer/apidocs/</link>
 								<link>https://aoindustries.com/ao-lang/apidocs/</link>
 								<link>https://aoindustries.com/ao-tempfiles/apidocs/</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons:commons-lang3:version}/</link>
 							</links>
 						</configuration>
 					</plugin>
@@ -91,6 +97,9 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 			<dependency>
 				<groupId>com.aoindustries</groupId><artifactId>ao-tempfiles</artifactId><version>1.0.2${POST-SNAPSHOT}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${org.apache.commons:commons-lang3:version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -113,6 +122,9 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 		</dependency>
 		<dependency>
 			<groupId>com.aoindustries</groupId><artifactId>ao-tempfiles</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
 		</dependency>
 	</dependencies>
 </project>

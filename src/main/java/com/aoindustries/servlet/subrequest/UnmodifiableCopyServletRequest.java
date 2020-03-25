@@ -42,6 +42,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * Achieves thread safety by making copies of most fields during constructor and being unmodifiable.
@@ -143,9 +144,8 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public ServletInputStream getInputStream() throws IOException {
-		throw new com.aoindustries.exception.NotImplementedException();
+		throw new NotImplementedException("TODO");
 	}
 
 	@Override
@@ -192,9 +192,8 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public BufferedReader getReader() throws IOException {
-		throw new com.aoindustries.exception.NotImplementedException();
+		throw new NotImplementedException("TODO");
 	}
 
 	@Override

@@ -35,6 +35,7 @@ import java.util.Locale;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletResponseWrapper;
+import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * <p>
@@ -86,9 +87,8 @@ public class ServletSubResponse implements IServletSubResponse {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public ServletOutputStream getOutputStream() throws IOException {
-		throw new com.aoindustries.exception.NotImplementedException();
+		throw new NotImplementedException("TODO");
 	}
 
 	static BufferWriter newBufferWriter(TempFileContext tempFileContext) {

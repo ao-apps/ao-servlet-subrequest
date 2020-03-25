@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * {@inheritDoc}
@@ -140,15 +141,13 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void setDateHeader(String name, long date) {
-		throw new com.aoindustries.exception.NotImplementedException();
+		throw new NotImplementedException("TODO");
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void addDateHeader(String name, long date) {
-		throw new com.aoindustries.exception.NotImplementedException();
+		throw new NotImplementedException("TODO");
 	}
 
 	@Override
