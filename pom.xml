@@ -40,7 +40,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 	<name>AO Servlet Subrequest</name>
 	<url>https://aoindustries.com/ao-servlet-subrequest/</url>
 	<description>Servlet sub-request wrappers with optional concurrency.</description>
-	<inceptionYear>2019</inceptionYear>
+	<inceptionYear>2016</inceptionYear>
 
 	<scm>
 		<!-- Can't inherit due to multi-module -->

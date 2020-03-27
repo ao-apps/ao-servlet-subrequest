@@ -44,7 +44,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 	<name>AO Servlet Subrequest Book</name>
 	<url>https://aoindustries.com/ao-servlet-subrequest/</url>
 	<description>Documentation for AO Servlet Subrequest in SemanticCMS format.</description>
-	<inceptionYear>2019</inceptionYear>
+	<inceptionYear>2016</inceptionYear>
 
 	<scm>
 		<connection>scm:git:git://github.com/aoindustries/ao-servlet-subrequest.git</connection>
