@@ -34,7 +34,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 
 	<properties>
 		<!-- Dependencies -->
-		<org.apache.commons.commons-lang3.version>3.9</org.apache.commons.commons-lang3.version>
+		<org.apache.commons.commons-lang3.version>3.10</org.apache.commons.commons-lang3.version>
 	</properties>
 
 	<name>AO Servlet Subrequest</name>
