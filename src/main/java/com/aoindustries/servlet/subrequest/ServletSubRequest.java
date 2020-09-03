@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
@@ -68,7 +70,7 @@ import javax.servlet.ServletResponse;
  */
 public class ServletSubRequest implements IServletSubRequest {
 
-	private static final boolean DEBUG = false;
+	private static final Logger logger = Logger.getLogger(ServletSubRequest.class.getName());
 
 	private final ServletRequest req;
 
@@ -104,9 +106,9 @@ public class ServletSubRequest implements IServletSubRequest {
 	static Map<String,Object> getAllAttributes(ServletRequest req) {
 		Map<String,Object> newAttributes = new LinkedHashMap<>();
 		for(String hiddenAttrName : hiddenAttributeNames) {
-			if(DEBUG) System.out.println("DEBUG: setAttribute: hiddenAttrName: " + hiddenAttrName);
+			if(logger.isLoggable(Level.FINEST)) logger.finest("hiddenAttrName: " + hiddenAttrName);
 			Object hiddenAttrVal = req.getAttribute(hiddenAttrName);
-			if(DEBUG) System.out.println("DEBUG: setAttribute: hiddenAttrVal: " + hiddenAttrVal);
+			if(logger.isLoggable(Level.FINEST)) logger.finest("hiddenAttrVal: " + hiddenAttrVal);
 			if(hiddenAttrVal != null) {
 				newAttributes.put(hiddenAttrName, hiddenAttrVal);
 			}
@@ -114,9 +116,9 @@ public class ServletSubRequest implements IServletSubRequest {
 		Enumeration<String> attrNames = req.getAttributeNames();
 		while(attrNames.hasMoreElements()) {
 			String attrName = attrNames.nextElement();
-			if(DEBUG) System.out.println("DEBUG: setAttribute: attrName: " + attrName);
+			if(logger.isLoggable(Level.FINEST)) logger.finest("attrName: " + attrName);
 			Object attrVal = req.getAttribute(attrName);
-			if(DEBUG) System.out.println("DEBUG: setAttribute: attrVal: " + attrVal);
+			if(logger.isLoggable(Level.FINEST)) logger.finest("attrVal: " + attrVal);
 			// Check for null in case attribute was removed during iteration
 			if(attrVal != null) {
 				newAttributes.put(attrName, attrVal);
@@ -129,7 +131,7 @@ public class ServletSubRequest implements IServletSubRequest {
 
 	@Override
 	public Object getAttribute(String name) {
-		if(DEBUG) System.out.println("DEBUG: getAttribute: " + name);
+		if(logger.isLoggable(Level.FINER)) logger.finer("name: " + name);
 		Map<String,Object> a = attributes;
 		if(
 			a != null
@@ -143,7 +145,7 @@ public class ServletSubRequest implements IServletSubRequest {
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		if(DEBUG) System.out.println("DEBUG: getAttributeNames");
+		if(logger.isLoggable(Level.FINER)) logger.finer("start");
 		Map<String,Object> a = attributes;
 		if(a != null) {
 			Set<String> attrNames = a.keySet();
@@ -161,9 +163,9 @@ public class ServletSubRequest implements IServletSubRequest {
 
 	@Override
 	public void setAttribute(String name, Object o) {
-		if(DEBUG) {
+		if(logger.isLoggable(Level.FINER)) {
 			try {
-				System.out.println("DEBUG: setAttribute: " + name + ", " + o);
+				logger.finer("DEBUG: setAttribute: " + name + ", " + o);
 			} catch(IllegalStateException e) {
 				// Object not ready for toString
 			}

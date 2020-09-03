@@ -96,7 +96,9 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 		locale = req.getLocale();
 		List<Locale> newLocales = new ArrayList<>();
 		Enumeration<Locale> e = req.getLocales();
-		while(e.hasMoreElements()) newLocales.add(e.nextElement());
+		while(e.hasMoreElements()) {
+			newLocales.add(e.nextElement());
+		}
 		locales = AoCollections.optimalUnmodifiableList(newLocales);
 		secure = req.isSecure();
 		remotePort = req.getRemotePort();
@@ -202,6 +204,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	}
 
 	@Override
+	@SuppressWarnings("DoubleCheckedLocking") // Safe: remoteHost is volatile
 	public String getRemoteHost() {
 		if(remoteHost == null) {
 			synchronized(lock) {
@@ -264,6 +267,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	}
 
 	@Override
+	@SuppressWarnings("DoubleCheckedLocking") // Safe: localName is volatile
 	public String getLocalName() {
 		if(localName == null) {
 			synchronized(lock) {

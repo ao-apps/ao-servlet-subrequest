@@ -32,6 +32,7 @@ import javax.servlet.ServletRequest;
  * Add ServletSubrequestListener?
  * </p>
  */
+@SuppressWarnings("MarkerInterface") // No additional methods yet
 public interface IServletSubRequest extends ServletRequest {
 
 }
