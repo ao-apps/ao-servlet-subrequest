@@ -22,13 +22,13 @@
  */
 package com.aoindustries.servlet.subrequest;
 
+import com.aoindustries.collections.AoCollections;
 import com.aoindustries.tempfiles.TempFileContext;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -266,9 +266,7 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 				return new ArrayList<>(headers.keySet());
 			} else {
 				// Combine all header names
-				Set<String> headerNames = new LinkedHashSet<>(
-					(existingHeaderNames.size() + headers.size()) *4/3+1
-				);
+				Set<String> headerNames = AoCollections.newLinkedHashSet(existingHeaderNames.size() + headers.size());
 				headerNames.addAll(existingHeaderNames);
 				headerNames.addAll(headers.keySet());
 				return headerNames;
