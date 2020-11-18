@@ -22,13 +22,13 @@
  */
 package com.aoindustries.servlet.subrequest;
 
-import com.aoindustries.exception.WrappedException;
 import com.aoindustries.io.buffer.BufferResult;
 import com.aoindustries.io.buffer.BufferWriter;
 import com.aoindustries.io.buffer.EmptyResult;
 import com.aoindustries.tempfiles.TempFileContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UncheckedIOException;
 import java.util.Locale;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
@@ -167,7 +167,7 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
 				capturedOut.close();
 				capturedOut = null;
 			} catch(IOException e) {
-				throw new WrappedException(e);
+				throw new UncheckedIOException(e);
 			}
 		}
 	}
