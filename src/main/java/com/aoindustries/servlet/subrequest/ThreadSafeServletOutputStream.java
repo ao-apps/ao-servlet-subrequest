@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -51,14 +51,14 @@ public final class ThreadSafeServletOutputStream extends ServletOutputStream {
 		synchronized(lock) {
 			out.write(b);
 		}
-    }
+	}
 
 	@Override
 	public void write(byte b[], int off, int len) throws IOException {
 		synchronized(lock) {
 			out.write(b, off, len);
 		}
-    }
+	}
 
 	@Override
 	public void flush() throws IOException {
@@ -72,7 +72,7 @@ public final class ThreadSafeServletOutputStream extends ServletOutputStream {
 		synchronized(lock) {
 			out.close();
 		}
-    }
+	}
 
 	@Override
 	public void print(String s) throws IOException {

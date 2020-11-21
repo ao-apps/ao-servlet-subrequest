@@ -150,14 +150,14 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 	@Override
 	public void setDateHeader(String name, long date) {
 		if(name != null && !name.isEmpty()) {
-	        setHeader(name, formatRFC5322(date));
+			setHeader(name, formatRFC5322(date));
 		}
 	}
 
 	@Override
 	public void addDateHeader(String name, long date) {
 		if(name != null && !name.isEmpty()) {
-	        addHeader(name, formatRFC5322(date));
+			addHeader(name, formatRFC5322(date));
 		}
 	}
 

@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -51,28 +51,28 @@ public class ThreadSafeServletInputStream extends ServletInputStream {
 		synchronized(lock) {
 			return in.read(b);
 		}
-    }
+	}
 
 	@Override
 	public int read(byte b[], int off, int len) throws IOException {
 		synchronized(lock) {
 			return in.read(b, off, len);
 		}
-    }
+	}
 
 	@Override
 	public long skip(long n) throws IOException {
 		synchronized(lock) {
 			return in.skip(n);
 		}
-    }
+	}
 
 	@Override
 	public int available() throws IOException {
 		synchronized(lock) {
 			return in.available();
 		}
-    }
+	}
 
 	@Override
 	public void close() throws IOException {
@@ -93,14 +93,14 @@ public class ThreadSafeServletInputStream extends ServletInputStream {
 		synchronized(lock) {
 			in.reset();
 		}
-    }
+	}
 
 	@Override
 	public boolean markSupported() {
 		synchronized(lock) {
 			return in.markSupported();
 		}
-    }
+	}
 
 	@Override
 	public int readLine(byte[] b, int off, int len) throws IOException {

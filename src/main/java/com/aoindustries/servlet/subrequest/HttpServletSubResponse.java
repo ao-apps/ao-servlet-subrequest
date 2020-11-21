@@ -155,7 +155,7 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 	/**
 	 * DateFormat is not thread-safe, use a pool of them.
 	 */
-    private static final Queue<DateFormat> rfc5322Formatters = new ConcurrentLinkedQueue<>();
+	private static final Queue<DateFormat> rfc5322Formatters = new ConcurrentLinkedQueue<>();
 
 	static String formatRFC5322(long date) {
 		DateFormat formatter = rfc5322Formatters.poll();
@@ -172,14 +172,14 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 	@Override
 	public void setDateHeader(String name, long date) {
 		if(name != null && !name.isEmpty()) {
-	        setHeader(name, formatRFC5322(date));
+			setHeader(name, formatRFC5322(date));
 		}
 	}
 
 	@Override
 	public void addDateHeader(String name, long date) {
 		if(name != null && !name.isEmpty()) {
-	        addHeader(name, formatRFC5322(date));
+			addHeader(name, formatRFC5322(date));
 		}
 	}
 
