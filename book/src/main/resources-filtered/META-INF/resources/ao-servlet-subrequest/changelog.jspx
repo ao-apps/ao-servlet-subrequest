@@ -37,7 +37,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2019-10-22T23:22:58-0500"
-		dateModified="2020-11-21T12:43:48-06:00"
+		dateModified="2020-11-21T12:51:45-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-servlet-subrequest:pom.version}" />
@@ -55,6 +55,10 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Implemented <code>setDateHeader(String, long)</code> and <code>addDateHeader(String, long)</code>.</li>
+					<li>
+						<code>set*Header(String, …)</code> and <code>add*Header(String, …)</code> now do nothing when
+						header name is null or empty.
+					</li>
 				</ul>
 			</changelog:release>
 		</c:if>

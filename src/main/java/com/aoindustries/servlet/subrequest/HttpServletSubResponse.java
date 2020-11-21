@@ -171,57 +171,69 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 
 	@Override
 	public void setDateHeader(String name, long date) {
-        setHeader(name, formatRFC5322(date));
+		if(name != null && !name.isEmpty()) {
+	        setHeader(name, formatRFC5322(date));
+		}
 	}
 
 	@Override
 	public void addDateHeader(String name, long date) {
-        addHeader(name, formatRFC5322(date));
+		if(name != null && !name.isEmpty()) {
+	        addHeader(name, formatRFC5322(date));
+		}
 	}
 
 	@Override
 	public void setHeader(String name, String value) {
-		if(headers == null) headers = new LinkedHashMap<>();
-		headers.put(name, Collections.singletonList(value));
+		if(name != null && !name.isEmpty()) {
+			if(headers == null) headers = new LinkedHashMap<>();
+			headers.put(name, Collections.singletonList(value));
+		}
 	}
 
 	@Override
 	public void addHeader(String name, String value) {
-		List<String> values;
-		if(headers == null) {
-			headers = new LinkedHashMap<>();
-			values = null;
-		} else {
-			values = headers.get(name);
-		}
-		if(values == null) {
-			Collection<String> existing = resp.getHeaders(name);
-			if(existing.isEmpty()) {
-				headers.put(name, Collections.singletonList(value));
+		if(name != null && !name.isEmpty()) {
+			List<String> values;
+			if(headers == null) {
+				headers = new LinkedHashMap<>();
+				values = null;
 			} else {
+				values = headers.get(name);
+			}
+			if(values == null) {
+				Collection<String> existing = resp.getHeaders(name);
+				if(existing.isEmpty()) {
+					headers.put(name, Collections.singletonList(value));
+				} else {
+					List<String> newValues = new ArrayList<>();
+					newValues.addAll(existing);
+					newValues.add(value);
+					headers.put(name, newValues);
+				}
+			} else if(values.size() == 1) {
 				List<String> newValues = new ArrayList<>();
-				newValues.addAll(existing);
+				newValues.addAll(values);
 				newValues.add(value);
 				headers.put(name, newValues);
+			} else {
+				values.add(value);
 			}
-		} else if(values.size() == 1) {
-			List<String> newValues = new ArrayList<>();
-			newValues.addAll(values);
-			newValues.add(value);
-			headers.put(name, newValues);
-		} else {
-			values.add(value);
 		}
 	}
 
 	@Override
 	public void setIntHeader(String name, int value) {
-		setHeader(name, Integer.toString(value));
+		if(name != null && !name.isEmpty()) {
+			setHeader(name, Integer.toString(value));
+		}
 	}
 
 	@Override
 	public void addIntHeader(String name, int value) {
-		addHeader(name, Integer.toString(value));
+		if(name != null && !name.isEmpty()) {
+			addHeader(name, Integer.toString(value));
+		}
 	}
 
 	@Override
