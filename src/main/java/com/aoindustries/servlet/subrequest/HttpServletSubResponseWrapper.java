@@ -23,6 +23,7 @@
 package com.aoindustries.servlet.subrequest;
 
 import com.aoindustries.collections.AoCollections;
+import static com.aoindustries.servlet.subrequest.HttpServletSubResponse.formatRFC5322;
 import com.aoindustries.tempfiles.TempFileContext;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ import java.util.Set;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * {@inheritDoc}
@@ -149,12 +149,12 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 
 	@Override
 	public void setDateHeader(String name, long date) {
-		throw new NotImplementedException("TODO");
+        setHeader(name, formatRFC5322(date));
 	}
 
 	@Override
 	public void addDateHeader(String name, long date) {
-		throw new NotImplementedException("TODO");
+        addHeader(name, formatRFC5322(date));
 	}
 
 	@Override

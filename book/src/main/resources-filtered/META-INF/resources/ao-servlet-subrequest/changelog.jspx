@@ -37,7 +37,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2019-10-22T23:22:58-0500"
-		dateModified="2020-03-27T01:42:34-05:00"
+		dateModified="2020-11-21T12:43:48-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-servlet-subrequest:pom.version}" />
@@ -52,7 +52,11 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 				groupId="@{project.groupId}"
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
-			/>
+			>
+				<ul>
+					<li>Implemented <code>setDateHeader(String, long)</code> and <code>addDateHeader(String, long)</code>.</li>
+				</ul>
+			</changelog:release>
 		</c:if>
 
 		<changelog:release

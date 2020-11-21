@@ -25,21 +25,33 @@ package com.aoindustries.servlet.subrequest;
 import com.aoindustries.collections.AoCollections;
 import com.aoindustries.tempfiles.TempFileContext;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+import java.util.TimeZone;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * {@inheritDoc}
  */
 public class HttpServletSubResponse extends ServletSubResponse implements IHttpServletSubResponse {
+
+	private static final String DATE_RFC5322 = "EEE, dd MMM yyyy HH:mm:ss z";
+
+	/**
+	 * Always use GMT in the date headers.
+	 */
+	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 
 	private final HttpServletResponse resp;
 
@@ -140,14 +152,31 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 		return redirectLocation;
 	}
 
+	/**
+	 * DateFormat is not thread-safe, use a pool of them.
+	 */
+    private static final Queue<DateFormat> rfc5322Formatters = new ConcurrentLinkedQueue<>();
+
+	static String formatRFC5322(long date) {
+		DateFormat formatter = rfc5322Formatters.poll();
+		if(formatter == null) {
+			formatter = new SimpleDateFormat(DATE_RFC5322, Locale.US);
+			formatter.setTimeZone(GMT);
+		}
+		String result = formatter.format(date);
+		rfc5322Formatters.add(formatter);
+		return result;
+
+	}
+
 	@Override
 	public void setDateHeader(String name, long date) {
-		throw new NotImplementedException("TODO");
+        setHeader(name, formatRFC5322(date));
 	}
 
 	@Override
 	public void addDateHeader(String name, long date) {
-		throw new NotImplementedException("TODO");
+        addHeader(name, formatRFC5322(date));
 	}
 
 	@Override
