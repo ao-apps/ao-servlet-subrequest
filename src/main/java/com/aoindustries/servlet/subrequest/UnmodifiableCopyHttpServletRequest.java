@@ -40,9 +40,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.commons.lang3.NotImplementedException;
 
-/**
- * {@inheritDoc}
- */
 public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletRequest implements HttpServletRequest {
 
 	private static Cookie[] copyCookies(Cookie[] cookies) {

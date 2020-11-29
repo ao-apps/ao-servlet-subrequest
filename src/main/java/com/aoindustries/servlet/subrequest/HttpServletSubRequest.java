@@ -34,9 +34,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.commons.lang3.NotImplementedException;
 
-/**
- * {@inheritDoc}
- */
 public class HttpServletSubRequest extends ServletSubRequest implements IHttpServletSubRequest {
 
 	private final HttpServletRequest req;

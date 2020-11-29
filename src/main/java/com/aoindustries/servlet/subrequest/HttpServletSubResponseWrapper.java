@@ -37,9 +37,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * {@inheritDoc}
- */
 public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper implements IHttpServletSubResponse {
 
 	private HttpServletResponse resp;

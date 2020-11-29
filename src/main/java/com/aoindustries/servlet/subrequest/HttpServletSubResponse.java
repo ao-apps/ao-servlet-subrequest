@@ -41,9 +41,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * {@inheritDoc}
- */
 public class HttpServletSubResponse extends ServletSubResponse implements IHttpServletSubResponse {
 
 	private static final String DATE_RFC5322 = "EEE, dd MMM yyyy HH:mm:ss z";

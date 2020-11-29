@@ -32,9 +32,6 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * {@inheritDoc}
- */
 public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServletResponse implements HttpServletResponse {
 
 	private final HttpServletResponse resp;
