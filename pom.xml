@@ -174,7 +174,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 			<!-- javaee-web-api-bom: <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId> -->
 			<!-- Transitive -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.16.0${POST-SNAPSHOT}</version>
+				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.17.0${POST-SNAPSHOT}</version>
 			</dependency>
 			<!-- BOM -->
 			<dependency>
