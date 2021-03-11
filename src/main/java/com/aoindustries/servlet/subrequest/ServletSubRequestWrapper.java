@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -83,7 +83,7 @@ public class ServletSubRequestWrapper extends ServletRequestWrapper implements I
 		)
 	);
 
-	private Map<String,Object> attributes;
+	private Map<String, Object> attributes;
 
 	@Override
 	public Object getAttribute(String name) {
@@ -125,7 +125,7 @@ public class ServletSubRequestWrapper extends ServletRequestWrapper implements I
 			}
 		}
 		if(attributes == null) {
-			Map<String,Object> newAttributes = new LinkedHashMap<>();
+			Map<String, Object> newAttributes = new LinkedHashMap<>();
 			for(String hiddenAttrName : hiddenAttributeNames) {
 				if(logger.isLoggable(Level.FINEST)) logger.finest("hiddenAttrName: " + hiddenAttrName);
 				Object hiddenAttrVal = super.getAttribute(hiddenAttrName);

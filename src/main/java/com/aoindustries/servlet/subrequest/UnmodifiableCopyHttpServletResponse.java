@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -36,14 +36,14 @@ public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServlet
 
 	private final HttpServletResponse resp;
 
-	private final Map<String,List<String>> headers;
+	private final Map<String, List<String>> headers;
 	private final int status;
 
 	public UnmodifiableCopyHttpServletResponse(HttpServletResponse resp) {
 		super(resp);
 		this.resp = resp;
 
-		Map<String,List<String>> newHeaders = null;
+		Map<String, List<String>> newHeaders = null;
 		for(String name : resp.getHeaderNames()) {
 			newHeaders = MinimalMap.put(
 				newHeaders,

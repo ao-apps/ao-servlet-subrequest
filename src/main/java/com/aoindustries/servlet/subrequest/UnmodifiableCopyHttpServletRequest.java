@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -55,7 +55,7 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
 
 	private final String authType;
 	private final Cookie[] cookies;
-	private final Map<String,List<String>> headers;
+	private final Map<String, List<String>> headers;
 	private final String method;
 	private final String pathInfo;
 	private final String pathTranslated;
@@ -76,7 +76,7 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
 
 		authType = req.getAuthType();
 		cookies = copyCookies(req.getCookies());
-		Map<String,List<String>> newHeaders = null;
+		Map<String, List<String>> newHeaders = null;
 		Enumeration<String> headerNames = req.getHeaderNames();
 		while(headerNames.hasMoreElements()) {
 			String name = headerNames.nextElement();

@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -60,11 +60,11 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 
 	private final ServletRequest req;
 
-	private final Map<String,Object> attributes;
+	private final Map<String, Object> attributes;
 	private final String characterEncoding;
 	private final int contentLength;
 	private final String contentType;
-	private final Map<String,String[]> parameterMap;
+	private final Map<String, String[]> parameterMap;
 	private final String protocol;
 	private final String scheme;
 	private final String serverName;
@@ -157,7 +157,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	}
 
 	@Override
-	public Map<String,String[]> getParameterMap() {
+	public Map<String, String[]> getParameterMap() {
 		return new LinkedHashMap<>(parameterMap);
 	}
 

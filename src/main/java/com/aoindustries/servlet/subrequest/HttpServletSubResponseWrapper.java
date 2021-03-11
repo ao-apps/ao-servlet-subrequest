@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2017, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -60,7 +60,7 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 	/**
 	 * The cookies added by this response.
 	 */
-	private Map<String,Cookie> cookies;
+	private Map<String, Cookie> cookies;
 
 	@Override
 	public void addCookie(Cookie cookie) {
@@ -70,13 +70,13 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 
 	@Override
 	public Map<String, Cookie> getCookies() {
-		return (cookies == null) ? Collections.<String,Cookie>emptyMap() : cookies;
+		return (cookies == null) ? Collections.<String, Cookie>emptyMap() : cookies;
 	}
 
 	/**
 	 * The headers added by this response, these include headers from the parent for each key in this map.
 	 */
-	private Map<String,List<String>> headers;
+	private Map<String, List<String>> headers;
 
 	@Override
 	public boolean containsHeader(String name) {

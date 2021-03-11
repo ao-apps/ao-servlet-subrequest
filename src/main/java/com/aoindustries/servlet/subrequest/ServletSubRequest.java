@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -103,8 +103,8 @@ public class ServletSubRequest implements IServletSubRequest {
 		)
 	);
 
-	static Map<String,Object> getAllAttributes(ServletRequest req) {
-		Map<String,Object> newAttributes = new LinkedHashMap<>();
+	static Map<String, Object> getAllAttributes(ServletRequest req) {
+		Map<String, Object> newAttributes = new LinkedHashMap<>();
 		for(String hiddenAttrName : hiddenAttributeNames) {
 			if(logger.isLoggable(Level.FINEST)) logger.finest("hiddenAttrName: " + hiddenAttrName);
 			Object hiddenAttrVal = req.getAttribute(hiddenAttrName);
@@ -127,12 +127,12 @@ public class ServletSubRequest implements IServletSubRequest {
 		return newAttributes;
 	}
 
-	private Map<String,Object> attributes;
+	private Map<String, Object> attributes;
 
 	@Override
 	public Object getAttribute(String name) {
 		if(logger.isLoggable(Level.FINER)) logger.finer("name: " + name);
-		Map<String,Object> a = attributes;
+		Map<String, Object> a = attributes;
 		if(
 			a != null
 			//&& !hiddenAttributeNames.contains(name)
@@ -146,7 +146,7 @@ public class ServletSubRequest implements IServletSubRequest {
 	@Override
 	public Enumeration<String> getAttributeNames() {
 		if(logger.isLoggable(Level.FINER)) logger.finer("start");
-		Map<String,Object> a = attributes;
+		Map<String, Object> a = attributes;
 		if(a != null) {
 			Set<String> attrNames = a.keySet();
 			List<String> nonHiddenAttributeNames = new ArrayList<>(attrNames.size());
