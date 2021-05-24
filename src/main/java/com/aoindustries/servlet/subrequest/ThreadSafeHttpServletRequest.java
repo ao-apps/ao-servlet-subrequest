@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,6 +35,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
 /**
@@ -225,6 +226,13 @@ public class ThreadSafeHttpServletRequest extends ThreadSafeServletRequest imple
 	}
 
 	@Override
+	public String changeSessionId() {
+		synchronized(lock) {
+			return req.changeSessionId();
+		}
+	}
+
+	@Override
 	public boolean isRequestedSessionIdValid() {
 		synchronized(lock) {
 			return req.isRequestedSessionIdValid();
@@ -294,6 +302,13 @@ public class ThreadSafeHttpServletRequest extends ThreadSafeServletRequest imple
 		synchronized(lock) {
 			Part part = req.getPart(name);
 			return part==null ? null : new ThreadSafePart(part, lock);
+		}
+	}
+
+	@Override
+	public <T extends HttpUpgradeHandler> T upgrade(Class<T> type) throws IOException, ServletException {
+		synchronized(lock) {
+			return req.upgrade(type);
 		}
 	}
 }

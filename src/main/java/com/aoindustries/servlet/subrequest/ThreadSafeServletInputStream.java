@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,6 +23,7 @@
 package com.aoindustries.servlet.subrequest;
 
 import java.io.IOException;
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 
 /**
@@ -106,6 +107,27 @@ public class ThreadSafeServletInputStream extends ServletInputStream {
 	public int readLine(byte[] b, int off, int len) throws IOException {
 		synchronized(lock) {
 			return in.readLine(b, off, len);
+		}
+	}
+
+	@Override
+	public boolean isFinished() {
+		synchronized(lock) {
+			return in.isFinished();
+		}
+	}
+
+	@Override
+	public boolean isReady() {
+		synchronized(lock) {
+			return in.isReady();
+		}
+	}
+
+	@Override
+	public void setReadListener(ReadListener readListener) {
+		synchronized(lock) {
+			in.setReadListener(readListener);
 		}
 	}
 }

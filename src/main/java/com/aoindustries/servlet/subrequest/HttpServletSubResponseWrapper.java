@@ -57,6 +57,11 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 		setIntHeader("content-length", len);
 	}
 
+	@Override
+	public void setContentLengthLong(long len) {
+		setLongHeader("content-length", len);
+	}
+
 	/**
 	 * The cookies added by this response.
 	 */
@@ -208,6 +213,18 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 	public void addIntHeader(String name, int value) {
 		if(name != null && !name.isEmpty()) {
 			addHeader(name, Integer.toString(value));
+		}
+	}
+
+	protected void setLongHeader(String name, long value) {
+		if(name != null && !name.isEmpty()) {
+			setHeader(name, Long.toString(value));
+		}
+	}
+
+	protected void addLongHeader(String name, long value) {
+		if(name != null && !name.isEmpty()) {
+			addHeader(name, Long.toString(value));
 		}
 	}
 

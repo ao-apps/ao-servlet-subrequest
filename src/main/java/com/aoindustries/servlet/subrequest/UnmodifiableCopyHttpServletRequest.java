@@ -37,6 +37,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -236,6 +237,14 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
 	}
 
 	@Override
+	public String changeSessionId() {
+		// TODO: Cache?
+		synchronized(lock) {
+			return req.changeSessionId();
+		}
+	}
+
+	@Override
 	public boolean isRequestedSessionIdValid() {
 		return requestedSessionIdValid;
 	}
@@ -293,6 +302,14 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
 		synchronized(lock) {
 			Part part = req.getPart(name);
 			return part==null ? null : new ThreadSafePart(part, lock);
+		}
+	}
+
+	@Override
+	public <T extends HttpUpgradeHandler> T upgrade(Class<T> type) throws IOException, ServletException {
+		// TODO: Cache?
+		synchronized(lock) {
+			return req.upgrade(type);
 		}
 	}
 }

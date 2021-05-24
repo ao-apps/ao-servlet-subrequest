@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -59,6 +59,13 @@ public class ThreadSafePart implements Part {
 	public String getName() {
 		synchronized(lock) {
 			return part.getName();
+		}
+	}
+
+	@Override
+	public String getSubmittedFileName() {
+		synchronized(lock) {
+			return part.getSubmittedFileName();
 		}
 	}
 

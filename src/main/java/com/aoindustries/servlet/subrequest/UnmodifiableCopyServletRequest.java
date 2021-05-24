@@ -63,6 +63,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	private final Map<String, Object> attributes;
 	private final String characterEncoding;
 	private final int contentLength;
+	private final long contentLengthLong;
 	private final String contentType;
 	private final Map<String, String[]> parameterMap;
 	private final String protocol;
@@ -86,6 +87,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 		attributes = ServletSubRequest.getAllAttributes(req);
 		characterEncoding = req.getCharacterEncoding();
 		contentLength = req.getContentLength();
+		contentLengthLong = req.getContentLengthLong();
 		contentType = req.getContentType();
 		parameterMap = new LinkedHashMap<>(req.getParameterMap());
 		protocol = req.getProtocol();
@@ -138,6 +140,11 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 	@Override
 	public int getContentLength() {
 		return contentLength;
+	}
+
+	@Override
+	public long getContentLengthLong() {
+		return contentLengthLong;
 	}
 
 	@Override

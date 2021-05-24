@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -24,6 +24,7 @@ package com.aoindustries.servlet.subrequest;
 
 import java.io.IOException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 
 /**
  * Synchronizes access to the wrapped output stream.
@@ -176,6 +177,20 @@ public final class ThreadSafeServletOutputStream extends ServletOutputStream {
 	public void println(double d) throws IOException {
 		synchronized(lock) {
 			out.println(d);
+		}
+	}
+
+	@Override
+	public boolean isReady() {
+		synchronized(lock) {
+			return out.isReady();
+		}
+	}
+
+	@Override
+	public void setWriteListener(WriteListener wl) {
+		synchronized(lock) {
+			out.setWriteListener(wl);
 		}
 	}
 }

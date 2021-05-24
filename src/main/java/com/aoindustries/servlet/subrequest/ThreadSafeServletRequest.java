@@ -106,6 +106,13 @@ public class ThreadSafeServletRequest extends ServletRequestWrapper {
 	}
 
 	@Override
+	public long getContentLengthLong() {
+		synchronized(lock) {
+			return super.getContentLengthLong();
+		}
+	}
+
+	@Override
 	public String getContentType() {
 		synchronized(lock) {
 			return super.getContentType();

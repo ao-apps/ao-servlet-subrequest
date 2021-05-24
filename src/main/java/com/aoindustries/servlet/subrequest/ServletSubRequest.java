@@ -203,7 +203,12 @@ public class ServletSubRequest implements IServletSubRequest {
 
 	@Override
 	public int getContentLength() {
-		return  req.getContentLength();
+		return req.getContentLength();
+	}
+
+	@Override
+	public long getContentLengthLong() {
+		return req.getContentLengthLong();
 	}
 
 	@Override
