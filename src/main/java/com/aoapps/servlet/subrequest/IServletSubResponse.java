@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,26 +20,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
-import java.util.Map;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import com.aoapps.io.buffer.BufferResult;
+import java.io.IOException;
+import javax.servlet.ServletResponse;
 
-public interface IHttpServletSubResponse extends IServletSubResponse, HttpServletResponse {
-
-	/**
-	 * Gets the cookies added on this response.
-	 */
-	Map<String, Cookie> getCookies();
+/**
+ * Indicates that a response is protected for use as a sub-response.
+ */
+public interface IServletSubResponse extends ServletResponse {
 
 	/**
-	 * Gets any redirect location.
+	 * Gets the captured output.  This closes the associated capturing writer.
+	 * Any subsequent writes will create a new buffer.
 	 */
-	String getRedirectLocation();
-
-	/**
-	 * Gets any status message set.
-	 */
-	String getStatusMessage();
+	BufferResult getCapturedOut() throws IOException;
 }

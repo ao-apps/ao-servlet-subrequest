@@ -20,163 +20,237 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
-import org.apache.commons.lang3.NotImplementedException;
 
-public class HttpServletSubRequest extends ServletSubRequest implements IHttpServletSubRequest {
+/**
+ * Synchronizes access to the wrapped request.
+ */
+public class ThreadSafeHttpServletRequest extends ThreadSafeServletRequest implements HttpServletRequest {
 
-	private final HttpServletRequest req;
+	private HttpServletRequest req;
 
-	private boolean loggedOut;
-
-	public HttpServletSubRequest(HttpServletRequest req) {
+	public ThreadSafeHttpServletRequest(HttpServletRequest req) {
 		super(req);
 		this.req = req;
 	}
 
 	@Override
+	public void setRequest(ServletRequest request) {
+		synchronized(lock) {
+			this.req = (HttpServletRequest)request;
+			super.setRequest(request);
+		}
+	}
+
+	@Override
 	public String getAuthType() {
-		return loggedOut ? null : req.getAuthType();
+		synchronized(lock) {
+			return req.getAuthType();
+		}
 	}
 
 	@Override
 	public Cookie[] getCookies() {
-		return req.getCookies();
+		synchronized(lock) {
+			return req.getCookies();
+		}
 	}
 
 	@Override
 	public long getDateHeader(String name) {
-		return req.getDateHeader(name);
+		synchronized(lock) {
+			return req.getDateHeader(name);
+		}
 	}
 
 	@Override
 	public String getHeader(String name) {
-		return req.getHeader(name);
+		synchronized(lock) {
+			return req.getHeader(name);
+		}
 	}
 
 	@Override
 	public Enumeration<String> getHeaders(String name) {
-		return req.getHeaders(name);
+		List<String> headers;
+		synchronized(lock) {
+			Enumeration<String> e = req.getHeaders(name);
+			if(e == null) {
+				return null;
+			} else {
+				headers = new ArrayList<>();
+				while(e.hasMoreElements()) {
+					headers.add(e.nextElement());
+				}
+			}
+		}
+		return Collections.enumeration(headers);
 	}
 
 	@Override
 	public Enumeration<String> getHeaderNames() {
-		return req.getHeaderNames();
+		List<String> headerNames;
+		synchronized(lock) {
+			Enumeration<String> e = req.getHeaderNames();
+			if(e == null) {
+				return null;
+			} else {
+				headerNames = new ArrayList<>();
+				while(e.hasMoreElements()) {
+					headerNames.add(e.nextElement());
+				}
+			}
+		}
+		return Collections.enumeration(headerNames);
 	}
 
 	@Override
 	public int getIntHeader(String name) {
-		return req.getIntHeader(name);
+		synchronized(lock) {
+			return req.getIntHeader(name);
+		}
 	}
-
-	private String method;
 
 	@Override
 	public String getMethod() {
-		if(method == null) method = req.getMethod();
-		return method;
-	}
-
-	@Override
-	public void setMethod(String method) {
-		this.method = method;
+		synchronized(lock) {
+			return req.getMethod();
+		}
 	}
 
 	@Override
 	public String getPathInfo() {
-		return req.getPathInfo();
+		synchronized(lock) {
+			return req.getPathInfo();
+		}
 	}
 
 	@Override
 	public String getPathTranslated() {
-		return req.getPathTranslated();
+		synchronized(lock) {
+			return req.getPathTranslated();
+		}
 	}
 
 	@Override
 	public String getContextPath() {
-		return req.getContextPath();
+		synchronized(lock) {
+			return req.getContextPath();
+		}
 	}
 
 	@Override
 	public String getQueryString() {
-		return req.getQueryString();
+		synchronized(lock) {
+			return req.getQueryString();
+		}
 	}
 
 	@Override
 	public String getRemoteUser() {
-		return loggedOut ? null : req.getRemoteUser();
+		synchronized(lock) {
+			return req.getRemoteUser();
+		}
 	}
 
 	@Override
 	public boolean isUserInRole(String role) {
-		return !loggedOut && req.isUserInRole(role);
+		synchronized(lock) {
+			return req.isUserInRole(role);
+		}
 	}
 
 	@Override
 	public Principal getUserPrincipal() {
-		return loggedOut ? null : req.getUserPrincipal();
+		synchronized(lock) {
+			return req.getUserPrincipal();
+		}
 	}
 
 	@Override
 	public String getRequestedSessionId() {
-		return req.getRequestedSessionId();
+		synchronized(lock) {
+			return req.getRequestedSessionId();
+		}
 	}
 
 	@Override
 	public String getRequestURI() {
-		return req.getRequestURI();
+		synchronized(lock) {
+			return req.getRequestURI();
+		}
 	}
 
 	@Override
 	public StringBuffer getRequestURL() {
-		return req.getRequestURL();
+		synchronized(lock) {
+			return req.getRequestURL();
+		}
 	}
 
 	@Override
 	public String getServletPath() {
-		return req.getServletPath();
+		synchronized(lock) {
+			return req.getServletPath();
+		}
 	}
 
 	@Override
 	public HttpSession getSession(boolean create) {
-		return req.getSession(create);
+		synchronized(lock) {
+			return req.getSession(create);
+		}
 	}
 
 	@Override
 	public HttpSession getSession() {
-		return req.getSession();
+		synchronized(lock) {
+			return req.getSession();
+		}
 	}
 
 	@Override
 	public String changeSessionId() {
-		return req.changeSessionId();
+		synchronized(lock) {
+			return req.changeSessionId();
+		}
 	}
 
 	@Override
 	public boolean isRequestedSessionIdValid() {
-		return req.isRequestedSessionIdValid();
+		synchronized(lock) {
+			return req.isRequestedSessionIdValid();
+		}
 	}
 
 	@Override
 	public boolean isRequestedSessionIdFromCookie() {
-		return req.isRequestedSessionIdFromCookie();
+		synchronized(lock) {
+			return req.isRequestedSessionIdFromCookie();
+		}
 	}
 
 	@Override
 	public boolean isRequestedSessionIdFromURL() {
-		return req.isRequestedSessionIdFromURL();
+		synchronized(lock) {
+			return req.isRequestedSessionIdFromURL();
+		}
 	}
 
 	/**
@@ -185,41 +259,56 @@ public class HttpServletSubRequest extends ServletSubRequest implements IHttpSer
 	@Deprecated
 	@Override
 	public boolean isRequestedSessionIdFromUrl() {
-		return req.isRequestedSessionIdFromUrl();
+		synchronized(lock) {
+			return req.isRequestedSessionIdFromUrl();
+		}
 	}
 
 	@Override
 	public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
-		throw new NotImplementedException("TODO");
+		synchronized(lock) {
+			return req.authenticate(response);
+		}
 	}
 
 	@Override
 	public void login(String username, String password) throws ServletException {
-		throw new NotImplementedException("TODO");
+		synchronized(lock) {
+			req.login(username, password);
+		}
 	}
 
 	@Override
 	public void logout() throws ServletException {
-		loggedOut = true;
-	}
-
-	@Override
-	public boolean isLoggedOut() {
-		return loggedOut;
+		synchronized(lock) {
+			req.logout();
+		}
 	}
 
 	@Override
 	public Collection<Part> getParts() throws IOException, ServletException {
-		return req.getParts();
+		synchronized(lock) {
+			Collection<Part> parts = req.getParts();
+			List<Part> wrapped = new ArrayList<>(parts.size());
+			for(Part part : parts) {
+				wrapped.add(new ThreadSafePart(part, lock));
+			}
+			return wrapped;
+		}
 	}
 
 	@Override
 	public Part getPart(String name) throws IOException, ServletException {
-		return req.getPart(name);
+		synchronized(lock) {
+			Part part = req.getPart(name);
+			return part==null ? null : new ThreadSafePart(part, lock);
+		}
 	}
 
 	@Override
 	public <T extends HttpUpgradeHandler> T upgrade(Class<T> type) throws IOException, ServletException {
-		return req.upgrade(type);
+		synchronized(lock) {
+			return req.upgrade(type);
+		}
 	}
 }

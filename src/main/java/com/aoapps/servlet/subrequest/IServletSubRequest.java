@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,19 +20,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 
-public interface IHttpServletSubRequest extends IServletSubRequest, HttpServletRequest {
+/**
+ * Indicates that a request is protected for use as a sub-request.
+ * <p>
+ * TODO: Create a subrequest lifecycle much like a normal request?
+ * Initialize the subrequest in a standard way?
+ * Add ServletSubrequestListener?
+ * </p>
+ */
+@SuppressWarnings("MarkerInterface") // No additional methods yet
+public interface IServletSubRequest extends ServletRequest {
 
-	/**
-	 * Overrides the method for the subrequest.
-	 */
-	void setMethod(String method);
-
-	/**
-	 * Checks if {@link #logout()} was called during the subrequest.
-	 */
-	boolean isLoggedOut();
 }

@@ -20,14 +20,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Enumeration;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,21 +35,15 @@ import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 import org.apache.commons.lang3.NotImplementedException;
 
-public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper implements IHttpServletSubRequest {
+public class HttpServletSubRequest extends ServletSubRequest implements IHttpServletSubRequest {
 
-	private HttpServletRequest req;
+	private final HttpServletRequest req;
 
 	private boolean loggedOut;
 
-	public HttpServletSubRequestWrapper(HttpServletRequest req) {
+	public HttpServletSubRequest(HttpServletRequest req) {
 		super(req);
 		this.req = req;
-	}
-
-	@Override
-	public void setRequest(ServletRequest request) {
-		this.req = (HttpServletRequest)request;
-		super.setRequest(request);
 	}
 
 	@Override

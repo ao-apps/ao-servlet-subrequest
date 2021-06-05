@@ -20,10 +20,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
-import com.aoindustries.collections.AoCollections;
-import com.aoindustries.collections.MinimalMap;
+import com.aoapps.collections.AoCollections;
+import com.aoapps.collections.MinimalMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;

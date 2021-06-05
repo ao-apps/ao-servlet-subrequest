@@ -20,41 +20,36 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
-import com.aoindustries.collections.AoCollections;
-import com.aoindustries.tempfiles.TempFileContext;
+import com.aoapps.collections.AoCollections;
+import static com.aoapps.servlet.subrequest.HttpServletSubResponse.formatRFC5322;
+import com.aoapps.tempfiles.TempFileContext;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.TimeZone;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-public class HttpServletSubResponse extends ServletSubResponse implements IHttpServletSubResponse {
+public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper implements IHttpServletSubResponse {
 
-	private static final String DATE_RFC5322 = "EEE, dd MMM yyyy HH:mm:ss z";
+	private HttpServletResponse resp;
 
-	/**
-	 * Always use GMT in the date headers.
-	 */
-	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
-
-	private final HttpServletResponse resp;
-
-	public HttpServletSubResponse(HttpServletResponse resp, TempFileContext tempFileContext) {
+	public HttpServletSubResponseWrapper(HttpServletResponse resp, TempFileContext tempFileContext) {
 		super(resp, tempFileContext);
 		this.resp = resp;
+	}
+
+	@Override
+	public void setResponse(ServletResponse response) {
+		this.resp = (HttpServletResponse)response;
+		super.setResponse(response);
 	}
 
 	@Override
@@ -152,23 +147,6 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 	@Override
 	public String getRedirectLocation() {
 		return redirectLocation;
-	}
-
-	/**
-	 * DateFormat is not thread-safe, use a pool of them.
-	 */
-	private static final Queue<DateFormat> rfc5322Formatters = new ConcurrentLinkedQueue<>();
-
-	static String formatRFC5322(long date) {
-		DateFormat formatter = rfc5322Formatters.poll();
-		if(formatter == null) {
-			formatter = new SimpleDateFormat(DATE_RFC5322, Locale.US);
-			formatter.setTimeZone(GMT);
-		}
-		String result = formatter.format(date);
-		rfc5322Formatters.add(formatter);
-		return result;
-
 	}
 
 	@Override

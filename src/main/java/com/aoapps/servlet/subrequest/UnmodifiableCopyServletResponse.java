@@ -20,169 +20,122 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
-import javax.servlet.ServletResponseWrapper;
 
 /**
+ * Achieves thread safety by making copies of most fields during constructor and being unmodifiable.
+ * This forms a base point for subrequests to diverge from.
+ * <p>
+ * Some methods have to read-through to the wrapped response, so it should not change
+ * state while this wrapper is in use.
  * Synchronizes access to the wrapped response.
+ * </p>
  */
-public class ThreadSafeServletResponse extends ServletResponseWrapper {
+public class UnmodifiableCopyServletResponse implements ServletResponse {
 
 	protected static class Lock {}
 	protected final Lock lock = new Lock();
 
-	public ThreadSafeServletResponse(ServletResponse resp) {
-		super(resp);
-	}
+	private final ServletResponse resp;
 
-	@Override
-	public ServletResponse getResponse() {
-		synchronized(lock) {
-			return super.getResponse();
-		}
-	}
+	private final String characterEncoding;
+	private final String contentType;
+	private final int bufferSize;
+	private final boolean committed;
+	private final Locale locale;
 
-	@Override
-	public void setResponse(ServletResponse response) {
-		synchronized(lock) {
-			super.setResponse(response);
-		}
+	public UnmodifiableCopyServletResponse(ServletResponse resp) {
+		this.resp = resp;
+		characterEncoding = resp.getCharacterEncoding();
+		contentType = resp.getContentType();
+		bufferSize = resp.getBufferSize();
+		committed = resp.isCommitted();
+		locale = resp.getLocale();
 	}
 
 	@Override
 	public void setCharacterEncoding(String charset) {
-		synchronized(lock) {
-			super.setCharacterEncoding(charset);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getCharacterEncoding() {
-		synchronized(lock) {
-			return super.getCharacterEncoding();
-		}
+		return characterEncoding;
 	}
 
-	private ThreadSafeServletOutputStream out;
 	@Override
-	public ThreadSafeServletOutputStream getOutputStream() throws IOException {
-		synchronized(lock) {
-			if(out == null) {
-				out = new ThreadSafeServletOutputStream(super.getOutputStream());
-			}
-			return out;
-		}
+	public ServletOutputStream getOutputStream() throws IOException {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public PrintWriter getWriter() throws IOException {
-		synchronized(lock) {
-			// Implementation of PrintWriter looks to be thread safe, but that is not in it's documented specification
-			return super.getWriter();
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setContentLength(int len) {
-		synchronized(lock) {
-			super.setContentLength(len);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setContentLengthLong(long len) {
-		synchronized(lock) {
-			super.setContentLengthLong(len);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setContentType(String type) {
-		synchronized(lock) {
-			super.setContentType(type);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getContentType() {
-		synchronized(lock) {
-			return super.getContentType();
-		}
+		return contentType;
 	}
 
 	@Override
 	public void setBufferSize(int size) {
-		synchronized(lock) {
-			super.setBufferSize(size);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int getBufferSize() {
-		synchronized(lock) {
-			return super.getBufferSize();
-		}
+		return bufferSize;
 	}
 
 	@Override
 	public void flushBuffer() throws IOException {
-		synchronized(lock) {
-			super.flushBuffer();
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isCommitted() {
-		synchronized(lock) {
-			return super.isCommitted();
-		}
+		return committed;
 	}
 
 	@Override
 	public void reset() {
-		synchronized(lock) {
-			super.reset();
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void resetBuffer() {
-		synchronized(lock) {
-			super.resetBuffer();
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setLocale(Locale loc) {
-		synchronized(lock) {
-			super.setLocale(loc);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Locale getLocale() {
-		synchronized(lock) {
-			return super.getLocale();
-		}
-	}
-
-	@Override
-	public boolean isWrapperFor(ServletResponse wrapped) {
-		synchronized(lock) {
-			return super.isWrapperFor(wrapped);
-		}
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public boolean isWrapperFor(Class wrappedType) {
-		synchronized(lock) {
-			return super.isWrapperFor(wrappedType);
-		}
+		return locale;
 	}
 }

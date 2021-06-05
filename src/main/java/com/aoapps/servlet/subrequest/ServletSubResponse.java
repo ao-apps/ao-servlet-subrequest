@@ -20,12 +20,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.subrequest;
+package com.aoapps.servlet.subrequest;
 
-import com.aoindustries.io.buffer.BufferResult;
-import com.aoindustries.io.buffer.BufferWriter;
-import com.aoindustries.io.buffer.EmptyResult;
-import com.aoindustries.tempfiles.TempFileContext;
+import com.aoapps.io.buffer.AutoTempFileWriter;
+import com.aoapps.io.buffer.BufferResult;
+import com.aoapps.io.buffer.BufferWriter;
+import com.aoapps.io.buffer.CharArrayBufferWriter;
+import com.aoapps.io.buffer.EmptyResult;
+import com.aoapps.tempfiles.TempFileContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UncheckedIOException;
@@ -37,30 +39,36 @@ import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * <p>
+ * <b>This does not implement {@link ServletResponseWrapper} and use of it is in violation
+ * of the specification.</b>  When used in conjunction with new threads (or threads
+ * from your own pool), Tomcat 7.0 and 8.5 do not notice you switched the response due to its
+ * use of ThreadLocal to enforce the spec.  This is very hackish and fragile - use at
+ * your own risk.
+ * </p>
+ * <p>
  * Wraps a servlet response with the intent to operate as a concurrent sub response.
  * Any changes made to the response will only affect this response and will not be passed
  * along to the wrapped response.
  * </p>
  * <p>
- * The wrapped response may change state while this sub response is being processed.
- * Any changes to the wrapped response will not affect this concurrent sub response.
+ * It is expected that the wrapped response will not change for the life of this wrapper.
+ * If it does change, the changes may or may not be visible depending on what has been
+ * accessed and changed on this response.
  * </p>
  * <p>
  * This class is not thread safe.
  * </p>
  */
-public class ServletSubResponseWrapper extends ServletResponseWrapper implements IServletSubResponse {
+public class ServletSubResponse implements IServletSubResponse {
 
+	private final ServletResponse resp;
 	private final TempFileContext tempFileContext;
 	private String characterEncoding;
 	private String contentType;
 	private Locale locale;
 
-	/**
-	 * @param tempFileContext  The temp file list for auto temp files.
-	 */
-	public ServletSubResponseWrapper(ServletResponse resp, TempFileContext tempFileContext) {
-		super(resp);
+	public ServletSubResponse(ServletResponse resp, TempFileContext tempFileContext) {
+		this.resp = resp;
 		this.tempFileContext = tempFileContext;
 		characterEncoding = resp.getCharacterEncoding();
 		contentType = resp.getContentType();
@@ -83,12 +91,21 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
 		throw new NotImplementedException("TODO");
 	}
 
+	static BufferWriter newBufferWriter(TempFileContext tempFileContext) {
+		return new AutoTempFileWriter(
+			//new SegmentedWriter(),
+			new CharArrayBufferWriter(),
+			tempFileContext,
+			AutoTempFileWriter.DEFAULT_TEMP_FILE_THRESHOLD
+		);
+	}
+
 	private BufferWriter capturedOut;
 	private PrintWriter capturedPW;
 	@Override
 	public PrintWriter getWriter() throws IOException {
 		if(capturedOut == null) {
-			capturedOut = ServletSubResponse.newBufferWriter(tempFileContext);
+			capturedOut = newBufferWriter(tempFileContext);
 		}
 		if(capturedPW == null) {
 			capturedPW = new PrintWriter(capturedOut);
