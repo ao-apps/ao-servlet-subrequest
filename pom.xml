@@ -36,7 +36,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 		<module.name>com.aoapps.servlet.subrequest</module.name>
 		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
 / <a target="${javadoc.target}" href="${project.url}">Servlet Subrequest</a>]]></javadoc.breadcrumbs>
-		<!-- SonarCloud.io -->
+		<!-- SonarQube -->
 		<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
 		<sonar.organization>aoindustries</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
