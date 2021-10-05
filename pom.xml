@@ -38,7 +38,7 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 / <a target="${javadoc.target}" href="${project.url}">Servlet Subrequest</a>]]></javadoc.breadcrumbs>
 		<!-- SonarQube -->
 		<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
-		<sonar.organization>aoindustries</sonar.organization>
+		<sonar.organization>ao-apps</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<!-- TODO: Implement tests -->
 		<sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
@@ -75,20 +75,20 @@ along with ao-servlet-subrequest.  If not, see <http://www.gnu.org/licenses />.
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/aoindustries/ao-servlet-subrequest.git</connection>
-		<developerConnection>scm:git:git@github.com:aoindustries/ao-servlet-subrequest.git</developerConnection>
-		<url>https://github.com/aoindustries/ao-servlet-subrequest</url>
+		<connection>scm:git:git://github.com/ao-apps/ao-servlet-subrequest.git</connection>
+		<developerConnection>scm:git:git@github.com:ao-apps/ao-servlet-subrequest.git</developerConnection>
+		<url>https://github.com/ao-apps/ao-servlet-subrequest</url>
 		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/aoindustries/ao-servlet-subrequest/issues</url>
+		<url>https://github.com/ao-apps/ao-servlet-subrequest/issues</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>GitHub Actions</system>
-		<url>https://github.com/aoindustries/ao-servlet-subrequest/actions</url>
+		<url>https://github.com/ao-apps/ao-servlet-subrequest/actions</url>
 	</ciManagement>
 
 	<repositories>
