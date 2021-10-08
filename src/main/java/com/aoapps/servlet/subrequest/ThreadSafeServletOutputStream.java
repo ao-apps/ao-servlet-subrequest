@@ -48,14 +48,14 @@ public final class ThreadSafeServletOutputStream extends ServletOutputStream {
 	}
 
 	@Override
-	public void write(byte b[]) throws IOException {
+	public void write(byte[] b) throws IOException {
 		synchronized(lock) {
 			out.write(b);
 		}
 	}
 
 	@Override
-	public void write(byte b[], int off, int len) throws IOException {
+	public void write(byte[] b, int off, int len) throws IOException {
 		synchronized(lock) {
 			out.write(b, off, len);
 		}

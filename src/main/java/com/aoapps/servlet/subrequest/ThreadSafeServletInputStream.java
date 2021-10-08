@@ -48,14 +48,14 @@ public class ThreadSafeServletInputStream extends ServletInputStream {
 	}
 
 	@Override
-	public int read(byte b[]) throws IOException {
+	public int read(byte[] b) throws IOException {
 		synchronized(lock) {
 			return in.read(b);
 		}
 	}
 
 	@Override
-	public int read(byte b[], int off, int len) throws IOException {
+	public int read(byte[] b, int off, int len) throws IOException {
 		synchronized(lock) {
 			return in.read(b, off, len);
 		}
