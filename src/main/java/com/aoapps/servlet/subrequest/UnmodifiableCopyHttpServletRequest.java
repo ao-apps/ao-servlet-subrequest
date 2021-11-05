@@ -259,10 +259,7 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
 		return requestedSessionIdFromURL;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public boolean isRequestedSessionIdFromUrl() {
 		return requestedSessionIdFromURL;

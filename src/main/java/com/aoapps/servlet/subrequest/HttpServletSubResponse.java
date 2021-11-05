@@ -106,19 +106,13 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 		return resp.encodeRedirectURL(url);
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String encodeUrl(String url) {
 		return resp.encodeUrl(url);
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String encodeRedirectUrl(String url) {
 		return resp.encodeRedirectUrl(url);
@@ -258,10 +252,7 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public void setStatus(int sc, String sm) {
 		// Docs make no mention of committed status, so we'll ignore on committed response as seems to behave

@@ -179,10 +179,7 @@ public class HttpServletSubRequest extends ServletSubRequest implements IHttpSer
 		return req.isRequestedSessionIdFromURL();
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public boolean isRequestedSessionIdFromUrl() {
 		return req.isRequestedSessionIdFromUrl();

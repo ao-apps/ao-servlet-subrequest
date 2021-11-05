@@ -94,9 +94,9 @@ public class ServletSubRequest implements IServletSubRequest {
 				RequestDispatcher.INCLUDE_SERVLET_PATH,
 				RequestDispatcher.INCLUDE_PATH_INFO,
 				RequestDispatcher.INCLUDE_QUERY_STRING,
-				RequestDispatcher.FORWARD_REQUEST_URI, 
+				RequestDispatcher.FORWARD_REQUEST_URI,
 				RequestDispatcher.FORWARD_CONTEXT_PATH,
-				RequestDispatcher.FORWARD_SERVLET_PATH, 
+				RequestDispatcher.FORWARD_SERVLET_PATH,
 				RequestDispatcher.FORWARD_PATH_INFO,
 				RequestDispatcher.FORWARD_QUERY_STRING
 			)
@@ -296,10 +296,7 @@ public class ServletSubRequest implements IServletSubRequest {
 		return req.getRequestDispatcher(path);
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String getRealPath(String path) {
 		return req.getRealPath(path);

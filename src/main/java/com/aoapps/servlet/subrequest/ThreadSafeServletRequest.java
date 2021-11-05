@@ -250,10 +250,7 @@ public class ThreadSafeServletRequest extends ServletRequestWrapper {
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String getRealPath(String path) {
 		synchronized(lock) {

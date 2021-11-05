@@ -186,10 +186,7 @@ public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper imple
 		return req.isRequestedSessionIdFromURL();
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public boolean isRequestedSessionIdFromUrl() {
 		return req.isRequestedSessionIdFromUrl();

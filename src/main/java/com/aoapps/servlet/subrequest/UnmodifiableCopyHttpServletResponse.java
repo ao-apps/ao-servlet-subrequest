@@ -79,10 +79,7 @@ public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServlet
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String encodeUrl(String url) {
 		synchronized(lock) {
@@ -90,10 +87,7 @@ public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServlet
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String encodeRedirectUrl(String url) {
 		synchronized(lock) {
@@ -151,10 +145,7 @@ public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServlet
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public void setStatus(int sc, String sm) {
 		throw new UnsupportedOperationException();

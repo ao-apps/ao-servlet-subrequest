@@ -77,10 +77,7 @@ public class ThreadSafeHttpServletResponse extends ThreadSafeServletResponse imp
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String encodeUrl(String url) {
 		synchronized(lock) {
@@ -88,10 +85,7 @@ public class ThreadSafeHttpServletResponse extends ThreadSafeServletResponse imp
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String encodeRedirectUrl(String url) {
 		synchronized(lock) {
@@ -169,10 +163,7 @@ public class ThreadSafeHttpServletResponse extends ThreadSafeServletResponse imp
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public void setStatus(int sc, String sm) {
 		synchronized(lock) {

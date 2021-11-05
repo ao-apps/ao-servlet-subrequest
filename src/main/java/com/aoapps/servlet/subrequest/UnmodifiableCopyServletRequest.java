@@ -256,10 +256,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public String getRealPath(String path) {
 		// TODO: Cache here?

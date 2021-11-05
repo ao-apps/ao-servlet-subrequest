@@ -253,10 +253,7 @@ public class ThreadSafeHttpServletRequest extends ThreadSafeServletRequest imple
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
+	@Deprecated(forRemoval = false)
 	@Override
 	public boolean isRequestedSessionIdFromUrl() {
 		synchronized(lock) {
