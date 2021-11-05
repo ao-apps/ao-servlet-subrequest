@@ -44,7 +44,7 @@ import javax.servlet.ServletResponse;
  */
 public class ThreadSafeServletRequest extends ServletRequestWrapper {
 
-	protected static class Lock {}
+	protected static class Lock {/* Empty lock class to help heap profile */}
 	protected final Lock lock = new Lock();
 
 	public ThreadSafeServletRequest(ServletRequest req) {
