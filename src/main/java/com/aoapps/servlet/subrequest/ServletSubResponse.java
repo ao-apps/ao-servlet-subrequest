@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2017, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -61,14 +61,14 @@ import org.apache.commons.lang3.NotImplementedException;
  */
 public class ServletSubResponse implements IServletSubResponse {
 
-	private final ServletResponse resp;
+//	private final ServletResponse resp;
 	private final TempFileContext tempFileContext;
 	private String characterEncoding;
 	private String contentType;
 	private Locale locale;
 
 	public ServletSubResponse(ServletResponse resp, TempFileContext tempFileContext) {
-		this.resp = resp;
+//		this.resp = resp;
 		this.tempFileContext = tempFileContext;
 		characterEncoding = resp.getCharacterEncoding();
 		contentType = resp.getContentType();

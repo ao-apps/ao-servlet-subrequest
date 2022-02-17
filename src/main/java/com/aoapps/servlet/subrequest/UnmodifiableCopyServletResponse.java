@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2021  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -42,7 +42,7 @@ public class UnmodifiableCopyServletResponse implements ServletResponse {
 	protected static class Lock {/* Empty lock class to help heap profile */}
 	protected final Lock lock = new Lock();
 
-	private final ServletResponse resp;
+//	private final ServletResponse resp;
 
 	private final String characterEncoding;
 	private final String contentType;
@@ -51,7 +51,7 @@ public class UnmodifiableCopyServletResponse implements ServletResponse {
 	private final Locale locale;
 
 	public UnmodifiableCopyServletResponse(ServletResponse resp) {
-		this.resp = resp;
+//		this.resp = resp;
 		characterEncoding = resp.getCharacterEncoding();
 		contentType = resp.getContentType();
 		bufferSize = resp.getBufferSize();
