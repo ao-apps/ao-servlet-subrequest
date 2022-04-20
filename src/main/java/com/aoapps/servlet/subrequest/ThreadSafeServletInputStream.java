@@ -32,103 +32,103 @@ import javax.servlet.ServletInputStream;
  */
 public class ThreadSafeServletInputStream extends ServletInputStream {
 
-	private static class Lock {/* Empty lock class to help heap profile */}
-	private final Lock lock = new Lock();
+  private static class Lock {/* Empty lock class to help heap profile */}
+  private final Lock lock = new Lock();
 
-	private final ServletInputStream in;
+  private final ServletInputStream in;
 
-	public ThreadSafeServletInputStream(ServletInputStream in) {
-		this.in = in;
-	}
+  public ThreadSafeServletInputStream(ServletInputStream in) {
+    this.in = in;
+  }
 
-	@Override
-	public int read() throws IOException {
-		synchronized(lock) {
-			return in.read();
-		}
-	}
+  @Override
+  public int read() throws IOException {
+    synchronized (lock) {
+      return in.read();
+    }
+  }
 
-	@Override
-	public int read(byte[] b) throws IOException {
-		synchronized(lock) {
-			return in.read(b);
-		}
-	}
+  @Override
+  public int read(byte[] b) throws IOException {
+    synchronized (lock) {
+      return in.read(b);
+    }
+  }
 
-	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
-		synchronized(lock) {
-			return in.read(b, off, len);
-		}
-	}
+  @Override
+  public int read(byte[] b, int off, int len) throws IOException {
+    synchronized (lock) {
+      return in.read(b, off, len);
+    }
+  }
 
-	@Override
-	public long skip(long n) throws IOException {
-		synchronized(lock) {
-			return in.skip(n);
-		}
-	}
+  @Override
+  public long skip(long n) throws IOException {
+    synchronized (lock) {
+      return in.skip(n);
+    }
+  }
 
-	@Override
-	public int available() throws IOException {
-		synchronized(lock) {
-			return in.available();
-		}
-	}
+  @Override
+  public int available() throws IOException {
+    synchronized (lock) {
+      return in.available();
+    }
+  }
 
-	@Override
-	public void close() throws IOException {
-		synchronized(lock) {
-			in.close();
-		}
-	}
+  @Override
+  public void close() throws IOException {
+    synchronized (lock) {
+      in.close();
+    }
+  }
 
-	@Override
-	public void mark(int readlimit) {
-		synchronized(lock) {
-			in.mark(readlimit);
-		}
-	}
+  @Override
+  public void mark(int readlimit) {
+    synchronized (lock) {
+      in.mark(readlimit);
+    }
+  }
 
-	@Override
-	public void reset() throws IOException {
-		synchronized(lock) {
-			in.reset();
-		}
-	}
+  @Override
+  public void reset() throws IOException {
+    synchronized (lock) {
+      in.reset();
+    }
+  }
 
-	@Override
-	public boolean markSupported() {
-		synchronized(lock) {
-			return in.markSupported();
-		}
-	}
+  @Override
+  public boolean markSupported() {
+    synchronized (lock) {
+      return in.markSupported();
+    }
+  }
 
-	@Override
-	public int readLine(byte[] b, int off, int len) throws IOException {
-		synchronized(lock) {
-			return in.readLine(b, off, len);
-		}
-	}
+  @Override
+  public int readLine(byte[] b, int off, int len) throws IOException {
+    synchronized (lock) {
+      return in.readLine(b, off, len);
+    }
+  }
 
-	@Override
-	public boolean isFinished() {
-		synchronized(lock) {
-			return in.isFinished();
-		}
-	}
+  @Override
+  public boolean isFinished() {
+    synchronized (lock) {
+      return in.isFinished();
+    }
+  }
 
-	@Override
-	public boolean isReady() {
-		synchronized(lock) {
-			return in.isReady();
-		}
-	}
+  @Override
+  public boolean isReady() {
+    synchronized (lock) {
+      return in.isReady();
+    }
+  }
 
-	@Override
-	public void setReadListener(ReadListener readListener) {
-		synchronized(lock) {
-			in.setReadListener(readListener);
-		}
-	}
+  @Override
+  public void setReadListener(ReadListener readListener) {
+    synchronized (lock) {
+      in.setReadListener(readListener);
+    }
+  }
 }

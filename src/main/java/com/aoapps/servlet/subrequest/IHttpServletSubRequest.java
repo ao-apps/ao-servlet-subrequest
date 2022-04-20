@@ -27,13 +27,13 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface IHttpServletSubRequest extends IServletSubRequest, HttpServletRequest {
 
-	/**
-	 * Overrides the method for the subrequest.
-	 */
-	void setMethod(String method);
+  /**
+   * Overrides the method for the subrequest.
+   */
+  void setMethod(String method);
 
-	/**
-	 * Checks if {@link #logout()} was called during the subrequest.
-	 */
-	boolean isLoggedOut();
+  /**
+   * Checks if {@link #logout()} was called during the subrequest.
+   */
+  boolean isLoggedOut();
 }

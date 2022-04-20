@@ -44,270 +44,276 @@ import org.apache.commons.lang3.NotImplementedException;
 
 public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletRequest implements HttpServletRequest {
 
-	private static Cookie[] copyCookies(Cookie[] cookies) {
-		if(cookies == null) return null;
-		Cookie[] copy = new Cookie[cookies.length];
-		for(int i=0; i<cookies.length; i++) {
-			copy[i] = (Cookie)cookies[i].clone();
-		}
-		return copy;
-	}
+  private static Cookie[] copyCookies(Cookie[] cookies) {
+    if (cookies == null) {
+      return null;
+    }
+    Cookie[] copy = new Cookie[cookies.length];
+    for (int i=0; i<cookies.length; i++) {
+      copy[i] = (Cookie)cookies[i].clone();
+    }
+    return copy;
+  }
 
-	private final HttpServletRequest req;
+  private final HttpServletRequest req;
 
-	private final String authType;
-	private final Cookie[] cookies;
-	private final Map<String, List<String>> headers;
-	private final String method;
-	private final String pathInfo;
-	private final String pathTranslated;
-	private final String contextPath;
-	private final String queryString;
-	private final String remoteUser;
-	private final Principal userPrincipal;
-	private final String requestedSessionId;
-	private final String requestURI;
-	private final String servletPath;
-	private final boolean requestedSessionIdValid;
-	private final boolean requestedSessionIdFromCookie;
-	private final boolean requestedSessionIdFromURL;
+  private final String authType;
+  private final Cookie[] cookies;
+  private final Map<String, List<String>> headers;
+  private final String method;
+  private final String pathInfo;
+  private final String pathTranslated;
+  private final String contextPath;
+  private final String queryString;
+  private final String remoteUser;
+  private final Principal userPrincipal;
+  private final String requestedSessionId;
+  private final String requestURI;
+  private final String servletPath;
+  private final boolean requestedSessionIdValid;
+  private final boolean requestedSessionIdFromCookie;
+  private final boolean requestedSessionIdFromURL;
 
-	public UnmodifiableCopyHttpServletRequest(HttpServletRequest req) {
-		super(req);
-		this.req = req;
+  public UnmodifiableCopyHttpServletRequest(HttpServletRequest req) {
+    super(req);
+    this.req = req;
 
-		authType = req.getAuthType();
-		cookies = copyCookies(req.getCookies());
-		Map<String, List<String>> newHeaders = null;
-		Enumeration<String> headerNames = req.getHeaderNames();
-		while(headerNames.hasMoreElements()) {
-			String name = headerNames.nextElement();
-			List<String> values = null;
-			Enumeration<String> headerValues = req.getHeaders(name);
-			while(headerValues.hasMoreElements()) {
-				values = MinimalList.add(
-					values,
-					headerValues.nextElement()
-				);
-			}
-			newHeaders = MinimalMap.put(
-				newHeaders,
-				name,
-				MinimalList.unmodifiable(values)
-			);
-		}
-		headers = MinimalMap.unmodifiable(newHeaders);
-		method = req.getMethod();
-		pathInfo = req.getPathInfo();
-		pathTranslated = req.getPathTranslated();
-		contextPath = req.getContextPath();
-		queryString = req.getQueryString();
-		remoteUser = req.getRemoteUser();
-		userPrincipal = req.getUserPrincipal();
-		requestedSessionId = req.getRequestedSessionId();
-		requestURI = req.getRequestURI();
-		servletPath = req.getServletPath();
-		requestedSessionIdValid = req.isRequestedSessionIdValid();
-		requestedSessionIdFromCookie = req.isRequestedSessionIdFromCookie();
-		requestedSessionIdFromURL = req.isRequestedSessionIdFromURL();
-	}
+    authType = req.getAuthType();
+    cookies = copyCookies(req.getCookies());
+    Map<String, List<String>> newHeaders = null;
+    Enumeration<String> headerNames = req.getHeaderNames();
+    while (headerNames.hasMoreElements()) {
+      String name = headerNames.nextElement();
+      List<String> values = null;
+      Enumeration<String> headerValues = req.getHeaders(name);
+      while (headerValues.hasMoreElements()) {
+        values = MinimalList.add(
+          values,
+          headerValues.nextElement()
+        );
+      }
+      newHeaders = MinimalMap.put(
+        newHeaders,
+        name,
+        MinimalList.unmodifiable(values)
+      );
+    }
+    headers = MinimalMap.unmodifiable(newHeaders);
+    method = req.getMethod();
+    pathInfo = req.getPathInfo();
+    pathTranslated = req.getPathTranslated();
+    contextPath = req.getContextPath();
+    queryString = req.getQueryString();
+    remoteUser = req.getRemoteUser();
+    userPrincipal = req.getUserPrincipal();
+    requestedSessionId = req.getRequestedSessionId();
+    requestURI = req.getRequestURI();
+    servletPath = req.getServletPath();
+    requestedSessionIdValid = req.isRequestedSessionIdValid();
+    requestedSessionIdFromCookie = req.isRequestedSessionIdFromCookie();
+    requestedSessionIdFromURL = req.isRequestedSessionIdFromURL();
+  }
 
-	@Override
-	public String getAuthType() {
-		return authType;
-	}
+  @Override
+  public String getAuthType() {
+    return authType;
+  }
 
-	@Override
-	public Cookie[] getCookies() {
-		return copyCookies(cookies);
-	}
+  @Override
+  public Cookie[] getCookies() {
+    return copyCookies(cookies);
+  }
 
-	@Override
-	public long getDateHeader(String name) {
-		if(!headers.containsKey(name)) return -1;
-		// TODO: cache here?
-		synchronized(lock) {
-			return req.getDateHeader(name);
-		}
-	}
+  @Override
+  public long getDateHeader(String name) {
+    if (!headers.containsKey(name)) {
+      return -1;
+    }
+    // TODO: cache here?
+    synchronized (lock) {
+      return req.getDateHeader(name);
+    }
+  }
 
-	@Override
-	public String getHeader(String name) {
-		List<String> values = headers.get(name);
-		return values==null ? null : values.get(0);
-	}
+  @Override
+  public String getHeader(String name) {
+    List<String> values = headers.get(name);
+    return values == null ? null : values.get(0);
+  }
 
-	@Override
-	public Enumeration<String> getHeaders(String name) {
-		List<String> values = headers.get(name);
-		if(values == null) return Collections.emptyEnumeration();
-		return Collections.enumeration(values);
-	}
+  @Override
+  public Enumeration<String> getHeaders(String name) {
+    List<String> values = headers.get(name);
+    if (values == null) {
+      return Collections.emptyEnumeration();
+    }
+    return Collections.enumeration(values);
+  }
 
-	@Override
-	public Enumeration<String> getHeaderNames() {
-		return Collections.enumeration(headers.keySet());
-	}
+  @Override
+  public Enumeration<String> getHeaderNames() {
+    return Collections.enumeration(headers.keySet());
+  }
 
-	@Override
-	public int getIntHeader(String name) {
-		String header = getHeader(name);
-		return header==null ? -1 : Integer.parseInt(header);
-	}
+  @Override
+  public int getIntHeader(String name) {
+    String header = getHeader(name);
+    return header == null ? -1 : Integer.parseInt(header);
+  }
 
-	@Override
-	public String getMethod() {
-		return method;
-	}
+  @Override
+  public String getMethod() {
+    return method;
+  }
 
-	@Override
-	public String getPathInfo() {
-		return pathInfo;
-	}
+  @Override
+  public String getPathInfo() {
+    return pathInfo;
+  }
 
-	@Override
-	public String getPathTranslated() {
-		return pathTranslated;
-	}
+  @Override
+  public String getPathTranslated() {
+    return pathTranslated;
+  }
 
-	@Override
-	public String getContextPath() {
-		return contextPath;
-	}
+  @Override
+  public String getContextPath() {
+    return contextPath;
+  }
 
-	@Override
-	public String getQueryString() {
-		return queryString;
-	}
+  @Override
+  public String getQueryString() {
+    return queryString;
+  }
 
-	@Override
-	public String getRemoteUser() {
-		return remoteUser;
-	}
+  @Override
+  public String getRemoteUser() {
+    return remoteUser;
+  }
 
-	@Override
-	public boolean isUserInRole(String role) {
-		// TODO: Cache?
-		synchronized(lock) {
-			return req.isUserInRole(role);
-		}
-	}
+  @Override
+  public boolean isUserInRole(String role) {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.isUserInRole(role);
+    }
+  }
 
-	@Override
-	public Principal getUserPrincipal() {
-		return userPrincipal;
-	}
+  @Override
+  public Principal getUserPrincipal() {
+    return userPrincipal;
+  }
 
-	@Override
-	public String getRequestedSessionId() {
-		return requestedSessionId;
-	}
+  @Override
+  public String getRequestedSessionId() {
+    return requestedSessionId;
+  }
 
-	@Override
-	public String getRequestURI() {
-		return requestURI;
-	}
+  @Override
+  public String getRequestURI() {
+    return requestURI;
+  }
 
-	@Override
-	public StringBuffer getRequestURL() {
-		// TODO: Cache?
-		synchronized(lock) {
-			return req.getRequestURL();
-		}
-	}
+  @Override
+  public StringBuffer getRequestURL() {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.getRequestURL();
+    }
+  }
 
-	@Override
-	public String getServletPath() {
-		return servletPath;
-	}
+  @Override
+  public String getServletPath() {
+    return servletPath;
+  }
 
-	@Override
-	public HttpSession getSession(boolean create) {
-		// TODO: Cache?
-		synchronized(lock) {
-			return req.getSession(create);
-		}
-	}
+  @Override
+  public HttpSession getSession(boolean create) {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.getSession(create);
+    }
+  }
 
-	@Override
-	public HttpSession getSession() {
-		// TODO: Cache?
-		synchronized(lock) {
-			return req.getSession();
-		}
-	}
+  @Override
+  public HttpSession getSession() {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.getSession();
+    }
+  }
 
-	@Override
-	public String changeSessionId() {
-		// TODO: Cache?
-		synchronized(lock) {
-			return req.changeSessionId();
-		}
-	}
+  @Override
+  public String changeSessionId() {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.changeSessionId();
+    }
+  }
 
-	@Override
-	public boolean isRequestedSessionIdValid() {
-		return requestedSessionIdValid;
-	}
+  @Override
+  public boolean isRequestedSessionIdValid() {
+    return requestedSessionIdValid;
+  }
 
-	@Override
-	public boolean isRequestedSessionIdFromCookie() {
-		return requestedSessionIdFromCookie;
-	}
+  @Override
+  public boolean isRequestedSessionIdFromCookie() {
+    return requestedSessionIdFromCookie;
+  }
 
-	@Override
-	public boolean isRequestedSessionIdFromURL() {
-		return requestedSessionIdFromURL;
-	}
+  @Override
+  public boolean isRequestedSessionIdFromURL() {
+    return requestedSessionIdFromURL;
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public boolean isRequestedSessionIdFromUrl() {
-		return requestedSessionIdFromURL;
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public boolean isRequestedSessionIdFromUrl() {
+    return requestedSessionIdFromURL;
+  }
 
-	@Override
-	public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
-		throw new NotImplementedException("TODO");
-	}
+  @Override
+  public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
+    throw new NotImplementedException("TODO");
+  }
 
-	@Override
-	public void login(String username, String password) throws ServletException {
-		throw new NotImplementedException("TODO");
-	}
+  @Override
+  public void login(String username, String password) throws ServletException {
+    throw new NotImplementedException("TODO");
+  }
 
-	@Override
-	public void logout() throws ServletException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void logout() throws ServletException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public Collection<Part> getParts() throws IOException, ServletException {
-		// TODO: Cache?
-		synchronized(lock) {
-			Collection<Part> parts = req.getParts();
-			List<Part> wrapped = new ArrayList<>(parts.size());
-			for(Part part : parts) {
-				wrapped.add(new ThreadSafePart(part, lock));
-			}
-			return wrapped;
-		}
-	}
+  @Override
+  public Collection<Part> getParts() throws IOException, ServletException {
+    // TODO: Cache?
+    synchronized (lock) {
+      Collection<Part> parts = req.getParts();
+      List<Part> wrapped = new ArrayList<>(parts.size());
+      for (Part part : parts) {
+        wrapped.add(new ThreadSafePart(part, lock));
+      }
+      return wrapped;
+    }
+  }
 
-	@Override
-	public Part getPart(String name) throws IOException, ServletException {
-		// TODO: Cache?
-		synchronized(lock) {
-			Part part = req.getPart(name);
-			return part==null ? null : new ThreadSafePart(part, lock);
-		}
-	}
+  @Override
+  public Part getPart(String name) throws IOException, ServletException {
+    // TODO: Cache?
+    synchronized (lock) {
+      Part part = req.getPart(name);
+      return part == null ? null : new ThreadSafePart(part, lock);
+    }
+  }
 
-	@Override
-	public <T extends HttpUpgradeHandler> T upgrade(Class<T> type) throws IOException, ServletException {
-		// TODO: Cache?
-		synchronized(lock) {
-			return req.upgrade(type);
-		}
-	}
+  @Override
+  public <T extends HttpUpgradeHandler> T upgrade(Class<T> type) throws IOException, ServletException {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.upgrade(type);
+    }
+  }
 }

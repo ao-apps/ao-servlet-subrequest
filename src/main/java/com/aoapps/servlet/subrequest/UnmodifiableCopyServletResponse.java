@@ -40,103 +40,103 @@ import javax.servlet.ServletResponse;
  */
 public class UnmodifiableCopyServletResponse implements ServletResponse {
 
-	protected static class Lock {/* Empty lock class to help heap profile */}
-	protected final Lock lock = new Lock();
+  protected static class Lock {/* Empty lock class to help heap profile */}
+  protected final Lock lock = new Lock();
 
-//	private final ServletResponse resp;
+//  private final ServletResponse resp;
 
-	private final String characterEncoding;
-	private final String contentType;
-	private final int bufferSize;
-	private final boolean committed;
-	private final Locale locale;
+  private final String characterEncoding;
+  private final String contentType;
+  private final int bufferSize;
+  private final boolean committed;
+  private final Locale locale;
 
-	public UnmodifiableCopyServletResponse(ServletResponse resp) {
-//		this.resp = resp;
-		characterEncoding = resp.getCharacterEncoding();
-		contentType = resp.getContentType();
-		bufferSize = resp.getBufferSize();
-		committed = resp.isCommitted();
-		locale = resp.getLocale();
-	}
+  public UnmodifiableCopyServletResponse(ServletResponse resp) {
+//    this.resp = resp;
+    characterEncoding = resp.getCharacterEncoding();
+    contentType = resp.getContentType();
+    bufferSize = resp.getBufferSize();
+    committed = resp.isCommitted();
+    locale = resp.getLocale();
+  }
 
-	@Override
-	public void setCharacterEncoding(String charset) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setCharacterEncoding(String charset) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public String getCharacterEncoding() {
-		return characterEncoding;
-	}
+  @Override
+  public String getCharacterEncoding() {
+    return characterEncoding;
+  }
 
-	@Override
-	public ServletOutputStream getOutputStream() throws IOException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public ServletOutputStream getOutputStream() throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public PrintWriter getWriter() throws IOException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public PrintWriter getWriter() throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setContentLength(int len) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setContentLength(int len) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setContentLengthLong(long len) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setContentLengthLong(long len) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setContentType(String type) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setContentType(String type) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public String getContentType() {
-		return contentType;
-	}
+  @Override
+  public String getContentType() {
+    return contentType;
+  }
 
-	@Override
-	public void setBufferSize(int size) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setBufferSize(int size) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public int getBufferSize() {
-		return bufferSize;
-	}
+  @Override
+  public int getBufferSize() {
+    return bufferSize;
+  }
 
-	@Override
-	public void flushBuffer() throws IOException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void flushBuffer() throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public boolean isCommitted() {
-		return committed;
-	}
+  @Override
+  public boolean isCommitted() {
+    return committed;
+  }
 
-	@Override
-	public void reset() {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void reset() {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void resetBuffer() {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void resetBuffer() {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setLocale(Locale loc) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setLocale(Locale loc) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public Locale getLocale() {
-		return locale;
-	}
+  @Override
+  public Locale getLocale() {
+    return locale;
+  }
 }

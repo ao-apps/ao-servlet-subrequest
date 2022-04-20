@@ -32,9 +32,9 @@ import javax.servlet.ServletResponse;
  */
 public interface IServletSubResponse extends ServletResponse {
 
-	/**
-	 * Gets the captured output.  This closes the associated capturing writer.
-	 * Any subsequent writes will create a new buffer.
-	 */
-	BufferResult getCapturedOut() throws IOException;
+  /**
+   * Gets the captured output.  This closes the associated capturing writer.
+   * Any subsequent writes will create a new buffer.
+   */
+  BufferResult getCapturedOut() throws IOException;
 }

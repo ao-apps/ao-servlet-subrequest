@@ -44,282 +44,290 @@ import javax.servlet.http.HttpServletResponse;
 
 public class HttpServletSubResponse extends ServletSubResponse implements IHttpServletSubResponse {
 
-	private static final String DATE_RFC5322 = "EEE, dd MMM yyyy HH:mm:ss z";
+  private static final String DATE_RFC5322 = "EEE, dd MMM yyyy HH:mm:ss z";
 
-	/**
-	 * Always use GMT in the date headers.
-	 */
-	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
+  /**
+   * Always use GMT in the date headers.
+   */
+  private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 
-	private final HttpServletResponse resp;
+  private final HttpServletResponse resp;
 
-	public HttpServletSubResponse(HttpServletResponse resp, TempFileContext tempFileContext) {
-		super(resp, tempFileContext);
-		this.resp = resp;
-	}
+  public HttpServletSubResponse(HttpServletResponse resp, TempFileContext tempFileContext) {
+    super(resp, tempFileContext);
+    this.resp = resp;
+  }
 
-	@Override
-	public void setContentLength(int len) {
-		setIntHeader("content-length", len);
-	}
+  @Override
+  public void setContentLength(int len) {
+    setIntHeader("content-length", len);
+  }
 
-	@Override
-	public void setContentLengthLong(long len) {
-		setLongHeader("content-length", len);
-	}
+  @Override
+  public void setContentLengthLong(long len) {
+    setLongHeader("content-length", len);
+  }
 
-	/**
-	 * The cookies added by this response.
-	 */
-	private Map<String, Cookie> cookies;
+  /**
+   * The cookies added by this response.
+   */
+  private Map<String, Cookie> cookies;
 
-	@Override
-	public void addCookie(Cookie cookie) {
-		if(cookies == null) cookies = new LinkedHashMap<>();
-		cookies.put(cookie.getName(), cookie);
-	}
+  @Override
+  public void addCookie(Cookie cookie) {
+    if (cookies == null) {
+      cookies = new LinkedHashMap<>();
+    }
+    cookies.put(cookie.getName(), cookie);
+  }
 
-	@Override
-	public Map<String, Cookie> getCookies() {
-		return (cookies == null) ? Collections.<String, Cookie>emptyMap() : cookies;
-	}
+  @Override
+  public Map<String, Cookie> getCookies() {
+    return (cookies == null) ? Collections.<String, Cookie>emptyMap() : cookies;
+  }
 
-	/**
-	 * The headers added by this response, these include headers from the parent for each key in this map.
-	 */
-	private Map<String, List<String>> headers;
+  /**
+   * The headers added by this response, these include headers from the parent for each key in this map.
+   */
+  private Map<String, List<String>> headers;
 
-	@Override
-	public boolean containsHeader(String name) {
-		return
-			(headers != null && headers.containsKey(name))
-			|| resp.containsHeader(name)
-		;
-	}
+  @Override
+  public boolean containsHeader(String name) {
+    return
+      (headers != null && headers.containsKey(name))
+      || resp.containsHeader(name)
+    ;
+  }
 
-	@Override
-	public String encodeURL(String url) {
-		return resp.encodeURL(url);
-	}
+  @Override
+  public String encodeURL(String url) {
+    return resp.encodeURL(url);
+  }
 
-	@Override
-	public String encodeRedirectURL(String url) {
-		return resp.encodeRedirectURL(url);
-	}
+  @Override
+  public String encodeRedirectURL(String url) {
+    return resp.encodeRedirectURL(url);
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public String encodeUrl(String url) {
-		return resp.encodeUrl(url);
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public String encodeUrl(String url) {
+    return resp.encodeUrl(url);
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public String encodeRedirectUrl(String url) {
-		return resp.encodeRedirectUrl(url);
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public String encodeRedirectUrl(String url) {
+    return resp.encodeRedirectUrl(url);
+  }
 
-	private int statusCode = Integer.MIN_VALUE; // Read-through when MIN_VALUE
-	private String statusMessage;
+  private int statusCode = Integer.MIN_VALUE; // Read-through when MIN_VALUE
+  private String statusMessage;
 
-	@Override
-	public void sendError(int sc, String msg) throws IOException {
-		if(committed) throw new IllegalStateException("Concurrent response already committed");
-		this.statusCode = sc;
-		this.statusMessage = msg;
-		this.committed = true;
-	}
+  @Override
+  public void sendError(int sc, String msg) throws IOException {
+    if (committed) {
+      throw new IllegalStateException("Concurrent response already committed");
+    }
+    this.statusCode = sc;
+    this.statusMessage = msg;
+    this.committed = true;
+  }
 
-	@Override
-	public void sendError(int sc) throws IOException {
-		sendError(sc, null);
-	}
+  @Override
+  public void sendError(int sc) throws IOException {
+    sendError(sc, null);
+  }
 
-	private String redirectLocation;
+  private String redirectLocation;
 
-	@Override
-	public void sendRedirect(String location) throws IOException {
-		if(committed) throw new IllegalStateException("Concurrent response already committed");
-		this.redirectLocation = location;
-		this.committed = true;
-	}
+  @Override
+  public void sendRedirect(String location) throws IOException {
+    if (committed) {
+      throw new IllegalStateException("Concurrent response already committed");
+    }
+    this.redirectLocation = location;
+    this.committed = true;
+  }
 
-	@Override
-	public String getRedirectLocation() {
-		return redirectLocation;
-	}
+  @Override
+  public String getRedirectLocation() {
+    return redirectLocation;
+  }
 
-	/**
-	 * DateFormat is not thread-safe, use a pool of them.
-	 */
-	private static final Queue<DateFormat> rfc5322Formatters = new ConcurrentLinkedQueue<>();
+  /**
+   * DateFormat is not thread-safe, use a pool of them.
+   */
+  private static final Queue<DateFormat> rfc5322Formatters = new ConcurrentLinkedQueue<>();
 
-	static String formatRFC5322(long date) {
-		DateFormat formatter = rfc5322Formatters.poll();
-		if(formatter == null) {
-			formatter = new SimpleDateFormat(DATE_RFC5322, Locale.US);
-			formatter.setTimeZone(GMT);
-		}
-		String result = formatter.format(date);
-		rfc5322Formatters.add(formatter);
-		return result;
+  static String formatRFC5322(long date) {
+    DateFormat formatter = rfc5322Formatters.poll();
+    if (formatter == null) {
+      formatter = new SimpleDateFormat(DATE_RFC5322, Locale.US);
+      formatter.setTimeZone(GMT);
+    }
+    String result = formatter.format(date);
+    rfc5322Formatters.add(formatter);
+    return result;
 
-	}
+  }
 
-	@Override
-	public void setDateHeader(String name, long date) {
-		if(name != null && !name.isEmpty()) {
-			setHeader(name, formatRFC5322(date));
-		}
-	}
+  @Override
+  public void setDateHeader(String name, long date) {
+    if (name != null && !name.isEmpty()) {
+      setHeader(name, formatRFC5322(date));
+    }
+  }
 
-	@Override
-	public void addDateHeader(String name, long date) {
-		if(name != null && !name.isEmpty()) {
-			addHeader(name, formatRFC5322(date));
-		}
-	}
+  @Override
+  public void addDateHeader(String name, long date) {
+    if (name != null && !name.isEmpty()) {
+      addHeader(name, formatRFC5322(date));
+    }
+  }
 
-	@Override
-	public void setHeader(String name, String value) {
-		if(name != null && !name.isEmpty()) {
-			if(headers == null) headers = new LinkedHashMap<>();
-			headers.put(name, Collections.singletonList(value));
-		}
-	}
+  @Override
+  public void setHeader(String name, String value) {
+    if (name != null && !name.isEmpty()) {
+      if (headers == null) {
+        headers = new LinkedHashMap<>();
+      }
+      headers.put(name, Collections.singletonList(value));
+    }
+  }
 
-	@Override
-	public void addHeader(String name, String value) {
-		if(name != null && !name.isEmpty()) {
-			List<String> values;
-			if(headers == null) {
-				headers = new LinkedHashMap<>();
-				values = null;
-			} else {
-				values = headers.get(name);
-			}
-			if(values == null) {
-				Collection<String> existing = resp.getHeaders(name);
-				if(existing.isEmpty()) {
-					headers.put(name, Collections.singletonList(value));
-				} else {
-					List<String> newValues = new ArrayList<>();
-					newValues.addAll(existing);
-					newValues.add(value);
-					headers.put(name, newValues);
-				}
-			} else if(values.size() == 1) {
-				List<String> newValues = new ArrayList<>();
-				newValues.addAll(values);
-				newValues.add(value);
-				headers.put(name, newValues);
-			} else {
-				values.add(value);
-			}
-		}
-	}
+  @Override
+  public void addHeader(String name, String value) {
+    if (name != null && !name.isEmpty()) {
+      List<String> values;
+      if (headers == null) {
+        headers = new LinkedHashMap<>();
+        values = null;
+      } else {
+        values = headers.get(name);
+      }
+      if (values == null) {
+        Collection<String> existing = resp.getHeaders(name);
+        if (existing.isEmpty()) {
+          headers.put(name, Collections.singletonList(value));
+        } else {
+          List<String> newValues = new ArrayList<>();
+          newValues.addAll(existing);
+          newValues.add(value);
+          headers.put(name, newValues);
+        }
+      } else if (values.size() == 1) {
+        List<String> newValues = new ArrayList<>();
+        newValues.addAll(values);
+        newValues.add(value);
+        headers.put(name, newValues);
+      } else {
+        values.add(value);
+      }
+    }
+  }
 
-	@Override
-	public void setIntHeader(String name, int value) {
-		if(name != null && !name.isEmpty()) {
-			setHeader(name, Integer.toString(value));
-		}
-	}
+  @Override
+  public void setIntHeader(String name, int value) {
+    if (name != null && !name.isEmpty()) {
+      setHeader(name, Integer.toString(value));
+    }
+  }
 
-	@Override
-	public void addIntHeader(String name, int value) {
-		if(name != null && !name.isEmpty()) {
-			addHeader(name, Integer.toString(value));
-		}
-	}
+  @Override
+  public void addIntHeader(String name, int value) {
+    if (name != null && !name.isEmpty()) {
+      addHeader(name, Integer.toString(value));
+    }
+  }
 
-	protected void setLongHeader(String name, long value) {
-		if(name != null && !name.isEmpty()) {
-			setHeader(name, Long.toString(value));
-		}
-	}
+  protected void setLongHeader(String name, long value) {
+    if (name != null && !name.isEmpty()) {
+      setHeader(name, Long.toString(value));
+    }
+  }
 
-	protected void addLongHeader(String name, long value) {
-		if(name != null && !name.isEmpty()) {
-			addHeader(name, Long.toString(value));
-		}
-	}
+  protected void addLongHeader(String name, long value) {
+    if (name != null && !name.isEmpty()) {
+      addHeader(name, Long.toString(value));
+    }
+  }
 
-	@Override
-	public void setStatus(int sc) {
-		// Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
-		if(!committed) {
-			this.statusCode = sc;
-		}
-	}
+  @Override
+  public void setStatus(int sc) {
+    // Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
+    if (!committed) {
+      this.statusCode = sc;
+    }
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public void setStatus(int sc, String sm) {
-		// Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
-		if(!committed) {
-			this.statusCode = sc;
-			this.statusMessage = sm;
-		}
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public void setStatus(int sc, String sm) {
+    // Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
+    if (!committed) {
+      this.statusCode = sc;
+      this.statusMessage = sm;
+    }
+  }
 
-	@Override
-	public int getStatus() {
-		return statusCode != Integer.MIN_VALUE ? statusCode : resp.getStatus();
-	}
+  @Override
+  public int getStatus() {
+    return statusCode != Integer.MIN_VALUE ? statusCode : resp.getStatus();
+  }
 
-	@Override
-	public String getStatusMessage() {
-		return statusMessage;
-	}
+  @Override
+  public String getStatusMessage() {
+    return statusMessage;
+  }
 
-	/**
-	 * TODO: Case insensitive?
-	 */
-	@Override
-	public String getHeader(String name) {
-		if(headers != null) {
-			List<String> values = headers.get(name);
-			if(values != null) {
-				assert !values.isEmpty();
-				return values.get(0);
-			}
-		}
-		return resp.getHeader(name);
-	}
+  /**
+   * TODO: Case insensitive?
+   */
+  @Override
+  public String getHeader(String name) {
+    if (headers != null) {
+      List<String> values = headers.get(name);
+      if (values != null) {
+        assert !values.isEmpty();
+        return values.get(0);
+      }
+    }
+    return resp.getHeader(name);
+  }
 
-	/**
-	 * TODO: Case insensitive?
-	 */
-	@Override
-	public Collection<String> getHeaders(String name) {
-		if(headers != null) {
-			List<String> values = headers.get(name);
-			if(values != null) {
-				return new ArrayList<>(values);
-			}
-		}
-		return resp.getHeaders(name);
-	}
+  /**
+   * TODO: Case insensitive?
+   */
+  @Override
+  public Collection<String> getHeaders(String name) {
+    if (headers != null) {
+      List<String> values = headers.get(name);
+      if (values != null) {
+        return new ArrayList<>(values);
+      }
+    }
+    return resp.getHeaders(name);
+  }
 
-	/**
-	 * TODO: Case insensitive?
-	 */
-	@Override
-	public Collection<String> getHeaderNames() {
-		Collection<String> existingHeaderNames = resp.getHeaderNames();
-		if(headers != null) {
-			if(existingHeaderNames.isEmpty()) {
-				return new ArrayList<>(headers.keySet());
-			} else {
-				// Combine all header names
-				Set<String> headerNames = AoCollections.newLinkedHashSet(existingHeaderNames.size() + headers.size());
-				headerNames.addAll(existingHeaderNames);
-				headerNames.addAll(headers.keySet());
-				return headerNames;
-			}
-		} else {
-			return existingHeaderNames;
-		}
-	}
+  /**
+   * TODO: Case insensitive?
+   */
+  @Override
+  public Collection<String> getHeaderNames() {
+    Collection<String> existingHeaderNames = resp.getHeaderNames();
+    if (headers != null) {
+      if (existingHeaderNames.isEmpty()) {
+        return new ArrayList<>(headers.keySet());
+      } else {
+        // Combine all header names
+        Set<String> headerNames = AoCollections.newLinkedHashSet(existingHeaderNames.size() + headers.size());
+        headerNames.addAll(existingHeaderNames);
+        headerNames.addAll(headers.keySet());
+        return headerNames;
+      }
+    } else {
+      return existingHeaderNames;
+    }
+  }
 }

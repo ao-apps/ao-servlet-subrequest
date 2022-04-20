@@ -29,18 +29,18 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface IHttpServletSubResponse extends IServletSubResponse, HttpServletResponse {
 
-	/**
-	 * Gets the cookies added on this response.
-	 */
-	Map<String, Cookie> getCookies();
+  /**
+   * Gets the cookies added on this response.
+   */
+  Map<String, Cookie> getCookies();
 
-	/**
-	 * Gets any redirect location.
-	 */
-	String getRedirectLocation();
+  /**
+   * Gets any redirect location.
+   */
+  String getRedirectLocation();
 
-	/**
-	 * Gets any status message set.
-	 */
-	String getStatusMessage();
+  /**
+   * Gets any status message set.
+   */
+  String getStatusMessage();
 }

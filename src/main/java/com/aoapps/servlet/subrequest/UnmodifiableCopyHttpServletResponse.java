@@ -35,146 +35,148 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServletResponse implements HttpServletResponse {
 
-	private final HttpServletResponse resp;
+  private final HttpServletResponse resp;
 
-	private final Map<String, List<String>> headers;
-	private final int status;
+  private final Map<String, List<String>> headers;
+  private final int status;
 
-	public UnmodifiableCopyHttpServletResponse(HttpServletResponse resp) {
-		super(resp);
-		this.resp = resp;
+  public UnmodifiableCopyHttpServletResponse(HttpServletResponse resp) {
+    super(resp);
+    this.resp = resp;
 
-		Map<String, List<String>> newHeaders = null;
-		for(String name : resp.getHeaderNames()) {
-			newHeaders = MinimalMap.put(
-				newHeaders,
-				name,
-				AoCollections.unmodifiableCopyList(resp.getHeaders(name))
-			);
-		}
-		headers = MinimalMap.unmodifiable(newHeaders);
-		status = resp.getStatus();
-	}
+    Map<String, List<String>> newHeaders = null;
+    for (String name : resp.getHeaderNames()) {
+      newHeaders = MinimalMap.put(
+        newHeaders,
+        name,
+        AoCollections.unmodifiableCopyList(resp.getHeaders(name))
+      );
+    }
+    headers = MinimalMap.unmodifiable(newHeaders);
+    status = resp.getStatus();
+  }
 
-	@Override
-	public void addCookie(Cookie cookie) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void addCookie(Cookie cookie) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public boolean containsHeader(String name) {
-		return headers.containsKey(name);
-	}
+  @Override
+  public boolean containsHeader(String name) {
+    return headers.containsKey(name);
+  }
 
-	@Override
-	public String encodeURL(String url) {
-		synchronized(lock) {
-			return resp.encodeURL(url);
-		}
-	}
+  @Override
+  public String encodeURL(String url) {
+    synchronized (lock) {
+      return resp.encodeURL(url);
+    }
+  }
 
-	@Override
-	public String encodeRedirectURL(String url) {
-		synchronized(lock) {
-			return resp.encodeRedirectURL(url);
-		}
-	}
+  @Override
+  public String encodeRedirectURL(String url) {
+    synchronized (lock) {
+      return resp.encodeRedirectURL(url);
+    }
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public String encodeUrl(String url) {
-		synchronized(lock) {
-			return resp.encodeUrl(url);
-		}
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public String encodeUrl(String url) {
+    synchronized (lock) {
+      return resp.encodeUrl(url);
+    }
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public String encodeRedirectUrl(String url) {
-		synchronized(lock) {
-			return resp.encodeRedirectUrl(url);
-		}
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public String encodeRedirectUrl(String url) {
+    synchronized (lock) {
+      return resp.encodeRedirectUrl(url);
+    }
+  }
 
-	@Override
-	public void sendError(int sc, String msg) throws IOException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void sendError(int sc, String msg) throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void sendError(int sc) throws IOException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void sendError(int sc) throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void sendRedirect(String location) throws IOException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void sendRedirect(String location) throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setDateHeader(String name, long date) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setDateHeader(String name, long date) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void addDateHeader(String name, long date) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void addDateHeader(String name, long date) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setHeader(String name, String value) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setHeader(String name, String value) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void addHeader(String name, String value) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void addHeader(String name, String value) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setIntHeader(String name, int value) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setIntHeader(String name, int value) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void addIntHeader(String name, int value) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void addIntHeader(String name, int value) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void setStatus(int sc) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setStatus(int sc) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public void setStatus(int sc, String sm) {
-		throw new UnsupportedOperationException();
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public void setStatus(int sc, String sm) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public int getStatus() {
-		return status;
-	}
+  @Override
+  public int getStatus() {
+    return status;
+  }
 
-	@Override
-	public String getHeader(String name) {
-		List<String> values = headers.get(name);
-		return values==null ? null : values.get(0);
-	}
+  @Override
+  public String getHeader(String name) {
+    List<String> values = headers.get(name);
+    return values == null ? null : values.get(0);
+  }
 
-	/**
-	 * TODO: Case insensitive?
-	 */
-	@Override
-	public Collection<String> getHeaders(String name) {
-		List<String> values = headers.get(name);
-		if(values == null) return new ArrayList<>(0);
-		return new ArrayList<>(values);
-	}
+  /**
+   * TODO: Case insensitive?
+   */
+  @Override
+  public Collection<String> getHeaders(String name) {
+    List<String> values = headers.get(name);
+    if (values == null) {
+      return new ArrayList<>(0);
+    }
+    return new ArrayList<>(values);
+  }
 
-	@Override
-	public Collection<String> getHeaderNames() {
-		return new ArrayList<>(headers.keySet());
-	}
+  @Override
+  public Collection<String> getHeaderNames() {
+    return new ArrayList<>(headers.keySet());
+  }
 }

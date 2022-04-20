@@ -62,149 +62,153 @@ import org.apache.commons.lang3.NotImplementedException;
  */
 public class ServletSubResponse implements IServletSubResponse {
 
-//	private final ServletResponse resp;
-	private final TempFileContext tempFileContext;
-	private String characterEncoding;
-	private String contentType;
-	private Locale locale;
+//  private final ServletResponse resp;
+  private final TempFileContext tempFileContext;
+  private String characterEncoding;
+  private String contentType;
+  private Locale locale;
 
-	public ServletSubResponse(ServletResponse resp, TempFileContext tempFileContext) {
-//		this.resp = resp;
-		this.tempFileContext = tempFileContext;
-		characterEncoding = resp.getCharacterEncoding();
-		contentType = resp.getContentType();
-		locale = resp.getLocale();
-	}
+  public ServletSubResponse(ServletResponse resp, TempFileContext tempFileContext) {
+//    this.resp = resp;
+    this.tempFileContext = tempFileContext;
+    characterEncoding = resp.getCharacterEncoding();
+    contentType = resp.getContentType();
+    locale = resp.getLocale();
+  }
 
-	@Override
-	public void setCharacterEncoding(String charset) {
-		// TODO: interact with contentType
-		this.characterEncoding = charset;
-	}
+  @Override
+  public void setCharacterEncoding(String charset) {
+    // TODO: interact with contentType
+    this.characterEncoding = charset;
+  }
 
-	@Override
-	public String getCharacterEncoding() {
-		return characterEncoding;
-	}
+  @Override
+  public String getCharacterEncoding() {
+    return characterEncoding;
+  }
 
-	@Override
-	public ServletOutputStream getOutputStream() throws IOException {
-		throw new NotImplementedException("TODO");
-	}
+  @Override
+  public ServletOutputStream getOutputStream() throws IOException {
+    throw new NotImplementedException("TODO");
+  }
 
-	static BufferWriter newBufferWriter(TempFileContext tempFileContext) {
-		return new AutoTempFileWriter(
-			//new SegmentedWriter(),
-			new CharArrayBufferWriter(),
-			tempFileContext,
-			AutoTempFileWriter.DEFAULT_TEMP_FILE_THRESHOLD
-		);
-	}
+  static BufferWriter newBufferWriter(TempFileContext tempFileContext) {
+    return new AutoTempFileWriter(
+      //new SegmentedWriter(),
+      new CharArrayBufferWriter(),
+      tempFileContext,
+      AutoTempFileWriter.DEFAULT_TEMP_FILE_THRESHOLD
+    );
+  }
 
-	private BufferWriter capturedOut;
-	private PrintWriter capturedPW;
-	@Override
-	public PrintWriter getWriter() throws IOException {
-		if(capturedOut == null) {
-			capturedOut = newBufferWriter(tempFileContext);
-		}
-		if(capturedPW == null) {
-			capturedPW = new PrintWriter(capturedOut);
-		}
-		return capturedPW;
-	}
+  private BufferWriter capturedOut;
+  private PrintWriter capturedPW;
+  @Override
+  public PrintWriter getWriter() throws IOException {
+    if (capturedOut == null) {
+      capturedOut = newBufferWriter(tempFileContext);
+    }
+    if (capturedPW == null) {
+      capturedPW = new PrintWriter(capturedOut);
+    }
+    return capturedPW;
+  }
 
-	@Override
-	public BufferResult getCapturedOut() throws IOException {
-		if(capturedOut == null) {
-			return EmptyResult.getInstance();
-		} else {
-			capturedOut.close();
-			BufferResult result = capturedOut.getResult();
-			capturedPW = null;
-			capturedOut = null;
-			return result;
-		}
-	}
+  @Override
+  public BufferResult getCapturedOut() throws IOException {
+    if (capturedOut == null) {
+      return EmptyResult.getInstance();
+    } else {
+      capturedOut.close();
+      BufferResult result = capturedOut.getResult();
+      capturedPW = null;
+      capturedOut = null;
+      return result;
+    }
+  }
 
-	@Override
-	public void setContentLength(int len) {
-		// Nothing to do
-	}
+  @Override
+  public void setContentLength(int len) {
+    // Nothing to do
+  }
 
-	@Override
-	public void setContentLengthLong(long len) {
-		// Nothing to do
-	}
+  @Override
+  public void setContentLengthLong(long len) {
+    // Nothing to do
+  }
 
-	@Override
-	public void setContentType(String type) {
-		// TODO: interact with character set
-		this.contentType = type;
-	}
+  @Override
+  public void setContentType(String type) {
+    // TODO: interact with character set
+    this.contentType = type;
+  }
 
-	@Override
-	public String getContentType() {
-		return contentType;
-	}
+  @Override
+  public String getContentType() {
+    return contentType;
+  }
 
-	@Override
-	public void setBufferSize(int size) {
-		// Nothing to do
-	}
+  @Override
+  public void setBufferSize(int size) {
+    // Nothing to do
+  }
 
-	@Override
-	public int getBufferSize() {
-		return Integer.MAX_VALUE;
-	}
+  @Override
+  public int getBufferSize() {
+    return Integer.MAX_VALUE;
+  }
 
-	protected boolean committed;
+  protected boolean committed;
 
-	@Override
-	public void flushBuffer() throws IOException {
-		if(capturedPW != null) capturedPW.flush();
-		committed = true;
-	}
+  @Override
+  public void flushBuffer() throws IOException {
+    if (capturedPW != null) {
+      capturedPW.flush();
+    }
+    committed = true;
+  }
 
-	@Override
-	public boolean isCommitted() {
-		return committed;
-	}
+  @Override
+  public boolean isCommitted() {
+    return committed;
+  }
 
-	@Override
-	public void reset() {
-		resetBuffer();
-		// TODO: Reset status code
-		// TODO: Reset headers
-	}
+  @Override
+  public void reset() {
+    resetBuffer();
+    // TODO: Reset status code
+    // TODO: Reset headers
+  }
 
-	@Override
-	public void resetBuffer() {
-		if(committed) throw new IllegalStateException("Concurrent response already committed");
-		if(capturedPW != null) {
-			capturedPW.close();
-			capturedPW = null;
-		}
-		if(capturedOut != null) {
-			try {
-				capturedOut.close();
-				capturedOut = null;
-			} catch(IOException e) {
-				throw new UncheckedIOException(e);
-			}
-		}
-	}
+  @Override
+  public void resetBuffer() {
+    if (committed) {
+      throw new IllegalStateException("Concurrent response already committed");
+    }
+    if (capturedPW != null) {
+      capturedPW.close();
+      capturedPW = null;
+    }
+    if (capturedOut != null) {
+      try {
+        capturedOut.close();
+        capturedOut = null;
+      } catch (IOException e) {
+        throw new UncheckedIOException(e);
+      }
+    }
+  }
 
-	@Override
-	public void setLocale(Locale loc) {
-		if(!committed) {
-			locale = loc;
-			// TODO: The spec has a bunch of other stuff, like locale affecting default character encoding
-		}
-	}
+  @Override
+  public void setLocale(Locale loc) {
+    if (!committed) {
+      locale = loc;
+      // TODO: The spec has a bunch of other stuff, like locale affecting default character encoding
+    }
+  }
 
-	@Override
-	public Locale getLocale() {
-		return locale;
-	}
+  @Override
+  public Locale getLocale() {
+    return locale;
+  }
 }

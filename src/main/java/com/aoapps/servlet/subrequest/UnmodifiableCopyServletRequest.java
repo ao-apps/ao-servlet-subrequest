@@ -56,276 +56,278 @@ import org.apache.commons.lang3.NotImplementedException;
  */
 public class UnmodifiableCopyServletRequest implements ServletRequest {
 
-	protected static class Lock {/* Empty lock class to help heap profile */}
-	protected final Lock lock = new Lock();
+  protected static class Lock {/* Empty lock class to help heap profile */}
+  protected final Lock lock = new Lock();
 
-	private final ServletRequest req;
+  private final ServletRequest req;
 
-	private final Map<String, Object> attributes;
-	private final String characterEncoding;
-	private final int contentLength;
-	private final long contentLengthLong;
-	private final String contentType;
-	private final Map<String, String[]> parameterMap;
-	private final String protocol;
-	private final String scheme;
-	private final String serverName;
-	private final int serverPort;
-	private final String remoteAddr;
-	private volatile String remoteHost;
-	private final Locale locale;
-	private final List<Locale> locales;
-	private final boolean secure;
-	private final int remotePort;
-	private volatile String localName;
-	private final String localAddr;
-	private final int localPort;
-	private final ServletContext servletContext;
-	private final DispatcherType dispatcherType;
+  private final Map<String, Object> attributes;
+  private final String characterEncoding;
+  private final int contentLength;
+  private final long contentLengthLong;
+  private final String contentType;
+  private final Map<String, String[]> parameterMap;
+  private final String protocol;
+  private final String scheme;
+  private final String serverName;
+  private final int serverPort;
+  private final String remoteAddr;
+  private volatile String remoteHost;
+  private final Locale locale;
+  private final List<Locale> locales;
+  private final boolean secure;
+  private final int remotePort;
+  private volatile String localName;
+  private final String localAddr;
+  private final int localPort;
+  private final ServletContext servletContext;
+  private final DispatcherType dispatcherType;
 
-	public UnmodifiableCopyServletRequest(ServletRequest req) {
-		this.req = req;
-		attributes = ServletSubRequest.getAllAttributes(req);
-		characterEncoding = req.getCharacterEncoding();
-		contentLength = req.getContentLength();
-		contentLengthLong = req.getContentLengthLong();
-		contentType = req.getContentType();
-		parameterMap = new LinkedHashMap<>(req.getParameterMap());
-		protocol = req.getProtocol();
-		scheme = req.getScheme();
-		serverName = req.getServerName();
-		serverPort = req.getServerPort();
-		remoteAddr = req.getRemoteAddr();
-		locale = req.getLocale();
-		List<Locale> newLocales = new ArrayList<>();
-		Enumeration<Locale> e = req.getLocales();
-		while(e.hasMoreElements()) {
-			newLocales.add(e.nextElement());
-		}
-		locales = AoCollections.optimalUnmodifiableList(newLocales);
-		secure = req.isSecure();
-		remotePort = req.getRemotePort();
-		localAddr = req.getLocalAddr();
-		localPort = req.getLocalPort();
-		servletContext = req.getServletContext();
-		dispatcherType = req.getDispatcherType();
-	}
+  public UnmodifiableCopyServletRequest(ServletRequest req) {
+    this.req = req;
+    attributes = ServletSubRequest.getAllAttributes(req);
+    characterEncoding = req.getCharacterEncoding();
+    contentLength = req.getContentLength();
+    contentLengthLong = req.getContentLengthLong();
+    contentType = req.getContentType();
+    parameterMap = new LinkedHashMap<>(req.getParameterMap());
+    protocol = req.getProtocol();
+    scheme = req.getScheme();
+    serverName = req.getServerName();
+    serverPort = req.getServerPort();
+    remoteAddr = req.getRemoteAddr();
+    locale = req.getLocale();
+    List<Locale> newLocales = new ArrayList<>();
+    Enumeration<Locale> e = req.getLocales();
+    while (e.hasMoreElements()) {
+      newLocales.add(e.nextElement());
+    }
+    locales = AoCollections.optimalUnmodifiableList(newLocales);
+    secure = req.isSecure();
+    remotePort = req.getRemotePort();
+    localAddr = req.getLocalAddr();
+    localPort = req.getLocalPort();
+    servletContext = req.getServletContext();
+    dispatcherType = req.getDispatcherType();
+  }
 
-	@Override
-	public Object getAttribute(String name) {
-		return attributes.get(name);
-	}
+  @Override
+  public Object getAttribute(String name) {
+    return attributes.get(name);
+  }
 
-	@Override
-	public Enumeration<String> getAttributeNames() {
-		Set<String> attrNames = attributes.keySet();
-		List<String> nonHiddenAttributeNames = new ArrayList<>(attrNames.size());
-		for(String attrName : attrNames) {
-			if(!ServletSubRequest.hiddenAttributeNames.contains(attrName)) {
-				nonHiddenAttributeNames.add(attrName);
-			}
-		}
-		return Collections.enumeration(nonHiddenAttributeNames);
-	}
+  @Override
+  public Enumeration<String> getAttributeNames() {
+    Set<String> attrNames = attributes.keySet();
+    List<String> nonHiddenAttributeNames = new ArrayList<>(attrNames.size());
+    for (String attrName : attrNames) {
+      if (!ServletSubRequest.hiddenAttributeNames.contains(attrName)) {
+        nonHiddenAttributeNames.add(attrName);
+      }
+    }
+    return Collections.enumeration(nonHiddenAttributeNames);
+  }
 
-	@Override
-	public String getCharacterEncoding() {
-		return characterEncoding;
-	}
+  @Override
+  public String getCharacterEncoding() {
+    return characterEncoding;
+  }
 
-	@Override
-	public void setCharacterEncoding(String enc) throws UnsupportedEncodingException {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setCharacterEncoding(String enc) throws UnsupportedEncodingException {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public int getContentLength() {
-		return contentLength;
-	}
+  @Override
+  public int getContentLength() {
+    return contentLength;
+  }
 
-	@Override
-	public long getContentLengthLong() {
-		return contentLengthLong;
-	}
+  @Override
+  public long getContentLengthLong() {
+    return contentLengthLong;
+  }
 
-	@Override
-	public String getContentType() {
-		return contentType;
-	}
+  @Override
+  public String getContentType() {
+    return contentType;
+  }
 
-	@Override
-	public ServletInputStream getInputStream() throws IOException {
-		throw new NotImplementedException("TODO");
-	}
+  @Override
+  public ServletInputStream getInputStream() throws IOException {
+    throw new NotImplementedException("TODO");
+  }
 
-	@Override
-	public String getParameter(String name) {
-		String[] values = parameterMap.get(name);
-		return values==null ? null : values[0];
-	}
+  @Override
+  public String getParameter(String name) {
+    String[] values = parameterMap.get(name);
+    return values == null ? null : values[0];
+  }
 
-	@Override
-	public Map<String, String[]> getParameterMap() {
-		return new LinkedHashMap<>(parameterMap);
-	}
+  @Override
+  public Map<String, String[]> getParameterMap() {
+    return new LinkedHashMap<>(parameterMap);
+  }
 
-	@Override
-	public Enumeration<String> getParameterNames() {
-		return Collections.enumeration(parameterMap.keySet());
-	}
+  @Override
+  public Enumeration<String> getParameterNames() {
+    return Collections.enumeration(parameterMap.keySet());
+  }
 
-	@Override
-	public String[] getParameterValues(String name) {
-		String[] values = parameterMap.get(name);
-		if(values == null) return null;
-		return Arrays.copyOf(values, values.length);
-	}
+  @Override
+  public String[] getParameterValues(String name) {
+    String[] values = parameterMap.get(name);
+    if (values == null) {
+      return null;
+    }
+    return Arrays.copyOf(values, values.length);
+  }
 
-	@Override
-	public String getProtocol() {
-		return protocol;
-	}
+  @Override
+  public String getProtocol() {
+    return protocol;
+  }
 
-	@Override
-	public String getScheme() {
-		return scheme;
-	}
+  @Override
+  public String getScheme() {
+    return scheme;
+  }
 
-	@Override
-	public String getServerName() {
-		return serverName;
-	}
+  @Override
+  public String getServerName() {
+    return serverName;
+  }
 
-	@Override
-	public int getServerPort() {
-		return serverPort;
-	}
+  @Override
+  public int getServerPort() {
+    return serverPort;
+  }
 
-	@Override
-	public BufferedReader getReader() throws IOException {
-		throw new NotImplementedException("TODO");
-	}
+  @Override
+  public BufferedReader getReader() throws IOException {
+    throw new NotImplementedException("TODO");
+  }
 
-	@Override
-	public String getRemoteAddr() {
-		return remoteAddr;
-	}
+  @Override
+  public String getRemoteAddr() {
+    return remoteAddr;
+  }
 
-	@Override
-	@SuppressWarnings("DoubleCheckedLocking") // Safe: remoteHost is volatile
-	public String getRemoteHost() {
-		if(remoteHost == null) {
-			synchronized(lock) {
-				if(remoteHost == null) {
-					remoteHost = req.getRemoteHost();
-				}
-			}
-		}
-		return remoteHost;
-	}
+  @Override
+  @SuppressWarnings("DoubleCheckedLocking") // Safe: remoteHost is volatile
+  public String getRemoteHost() {
+    if (remoteHost == null) {
+      synchronized (lock) {
+        if (remoteHost == null) {
+          remoteHost = req.getRemoteHost();
+        }
+      }
+    }
+    return remoteHost;
+  }
 
-	@Override
-	public void setAttribute(String name, Object o) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setAttribute(String name, Object o) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public void removeAttribute(String name) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void removeAttribute(String name) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public Locale getLocale() {
-		return locale;
-	}
+  @Override
+  public Locale getLocale() {
+    return locale;
+  }
 
-	@Override
-	public Enumeration<Locale> getLocales() {
-		return Collections.enumeration(locales);
-	}
+  @Override
+  public Enumeration<Locale> getLocales() {
+    return Collections.enumeration(locales);
+  }
 
-	@Override
-	public boolean isSecure() {
-		return secure;
-	}
+  @Override
+  public boolean isSecure() {
+    return secure;
+  }
 
-	@Override
-	public RequestDispatcher getRequestDispatcher(String path) {
-		// TODO: Cache here?
-		synchronized(lock) {
-			return req.getRequestDispatcher(path);
-		}
-	}
+  @Override
+  public RequestDispatcher getRequestDispatcher(String path) {
+    // TODO: Cache here?
+    synchronized (lock) {
+      return req.getRequestDispatcher(path);
+    }
+  }
 
-	@Deprecated(forRemoval = false)
-	@Override
-	public String getRealPath(String path) {
-		// TODO: Cache here?
-		synchronized(lock) {
-			return req.getRealPath(path);
-		}
-	}
+  @Deprecated(forRemoval = false)
+  @Override
+  public String getRealPath(String path) {
+    // TODO: Cache here?
+    synchronized (lock) {
+      return req.getRealPath(path);
+    }
+  }
 
-	@Override
-	public int getRemotePort() {
-		return remotePort;
-	}
+  @Override
+  public int getRemotePort() {
+    return remotePort;
+  }
 
-	@Override
-	@SuppressWarnings("DoubleCheckedLocking") // Safe: localName is volatile
-	public String getLocalName() {
-		if(localName == null) {
-			synchronized(lock) {
-				if(localName == null) {
-					localName = req.getLocalName();
-				}
-			}
-		}
-		return localName;
-	}
+  @Override
+  @SuppressWarnings("DoubleCheckedLocking") // Safe: localName is volatile
+  public String getLocalName() {
+    if (localName == null) {
+      synchronized (lock) {
+        if (localName == null) {
+          localName = req.getLocalName();
+        }
+      }
+    }
+    return localName;
+  }
 
-	@Override
-	public String getLocalAddr() {
-		return localAddr;
-	}
+  @Override
+  public String getLocalAddr() {
+    return localAddr;
+  }
 
-	@Override
-	public int getLocalPort() {
-		return localPort;
-	}
+  @Override
+  public int getLocalPort() {
+    return localPort;
+  }
 
-	@Override
-	public ServletContext getServletContext() {
-		return servletContext;
-	}
+  @Override
+  public ServletContext getServletContext() {
+    return servletContext;
+  }
 
-	@Override
-	public AsyncContext startAsync() throws IllegalStateException {
-		throw new IllegalStateException("Not allowed on unmodifiable copy request");
-	}
+  @Override
+  public AsyncContext startAsync() throws IllegalStateException {
+    throw new IllegalStateException("Not allowed on unmodifiable copy request");
+  }
 
-	@Override
-	public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException {
-		throw new IllegalStateException("Not allowed on unmodifiable copy request");
-	}
+  @Override
+  public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException {
+    throw new IllegalStateException("Not allowed on unmodifiable copy request");
+  }
 
-	@Override
-	public boolean isAsyncStarted() {
-		return false;
-	}
+  @Override
+  public boolean isAsyncStarted() {
+    return false;
+  }
 
-	@Override
-	public boolean isAsyncSupported() {
-		return false;
-	}
+  @Override
+  public boolean isAsyncSupported() {
+    return false;
+  }
 
-	@Override
-	public AsyncContext getAsyncContext() {
-		throw new IllegalStateException("Not allowed on unmodifiable copy request");
-	}
+  @Override
+  public AsyncContext getAsyncContext() {
+    throw new IllegalStateException("Not allowed on unmodifiable copy request");
+  }
 
-	@Override
-	public DispatcherType getDispatcherType() {
-		return dispatcherType;
-	}
+  @Override
+  public DispatcherType getDispatcherType() {
+    return dispatcherType;
+  }
 }

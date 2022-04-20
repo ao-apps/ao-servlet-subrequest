@@ -34,81 +34,81 @@ import javax.servlet.http.Part;
  */
 public class ThreadSafePart implements Part {
 
-	protected final Part part;
-	protected final Object lock;
+  protected final Part part;
+  protected final Object lock;
 
-	public ThreadSafePart(Part part, Object lock) {
-		this.part = part;
-		this.lock = lock;
-	}
+  public ThreadSafePart(Part part, Object lock) {
+    this.part = part;
+    this.lock = lock;
+  }
 
-	@Override
-	public InputStream getInputStream() throws IOException {
-		synchronized(lock) {
-			return part.getInputStream();
-		}
-	}
+  @Override
+  public InputStream getInputStream() throws IOException {
+    synchronized (lock) {
+      return part.getInputStream();
+    }
+  }
 
-	@Override
-	public String getContentType() {
-		synchronized(lock) {
-			return part.getContentType();
-		}
-	}
+  @Override
+  public String getContentType() {
+    synchronized (lock) {
+      return part.getContentType();
+    }
+  }
 
-	@Override
-	public String getName() {
-		synchronized(lock) {
-			return part.getName();
-		}
-	}
+  @Override
+  public String getName() {
+    synchronized (lock) {
+      return part.getName();
+    }
+  }
 
-	@Override
-	public String getSubmittedFileName() {
-		synchronized(lock) {
-			return part.getSubmittedFileName();
-		}
-	}
+  @Override
+  public String getSubmittedFileName() {
+    synchronized (lock) {
+      return part.getSubmittedFileName();
+    }
+  }
 
-	@Override
-	public long getSize() {
-		synchronized(lock) {
-			return part.getSize();
-		}
-	}
+  @Override
+  public long getSize() {
+    synchronized (lock) {
+      return part.getSize();
+    }
+  }
 
-	@Override
-	public void write(String fileName) throws IOException {
-		synchronized(lock) {
-			part.write(fileName);
-		}
-	}
+  @Override
+  public void write(String fileName) throws IOException {
+    synchronized (lock) {
+      part.write(fileName);
+    }
+  }
 
-	@Override
-	public void delete() throws IOException {
-		synchronized(lock) {
-			part.delete();
-		}
-	}
+  @Override
+  public void delete() throws IOException {
+    synchronized (lock) {
+      part.delete();
+    }
+  }
 
-	@Override
-	public String getHeader(String name) {
-		synchronized(lock) {
-			return part.getHeader(name);
-		}
-	}
+  @Override
+  public String getHeader(String name) {
+    synchronized (lock) {
+      return part.getHeader(name);
+    }
+  }
 
-	@Override
-	public Collection<String> getHeaders(String name) {
-		synchronized(lock) {
-			return new ArrayList<>(part.getHeaders(name));
-		}
-	}
+  @Override
+  public Collection<String> getHeaders(String name) {
+    synchronized (lock) {
+      return new ArrayList<>(part.getHeaders(name));
+    }
+  }
 
-	@Override
-	public Collection<String> getHeaderNames() {
-		synchronized(lock) {
-			return new ArrayList<>(part.getHeaderNames());
-		}
-	}
+  @Override
+  public Collection<String> getHeaderNames() {
+    synchronized (lock) {
+      return new ArrayList<>(part.getHeaderNames());
+    }
+  }
 }
