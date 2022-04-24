@@ -54,7 +54,7 @@ public class ThreadSafeHttpServletRequest extends ThreadSafeServletRequest imple
   @Override
   public void setRequest(ServletRequest request) {
     synchronized (lock) {
-      this.req = (HttpServletRequest)request;
+      this.req = (HttpServletRequest) request;
       super.setRequest(request);
     }
   }

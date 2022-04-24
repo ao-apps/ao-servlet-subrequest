@@ -94,8 +94,8 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
   @Override
   public boolean containsHeader(String name) {
     return
-      (headers != null && headers.containsKey(name))
-      || resp.containsHeader(name)
+        (headers != null && headers.containsKey(name))
+            || resp.containsHeader(name)
     ;
   }
 

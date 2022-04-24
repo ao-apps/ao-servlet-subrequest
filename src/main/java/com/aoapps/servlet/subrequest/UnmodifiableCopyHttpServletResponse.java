@@ -47,9 +47,9 @@ public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServlet
     Map<String, List<String>> newHeaders = null;
     for (String name : resp.getHeaderNames()) {
       newHeaders = MinimalMap.put(
-        newHeaders,
-        name,
-        AoCollections.unmodifiableCopyList(resp.getHeaders(name))
+          newHeaders,
+          name,
+          AoCollections.unmodifiableCopyList(resp.getHeaders(name))
       );
     }
     headers = MinimalMap.unmodifiable(newHeaders);

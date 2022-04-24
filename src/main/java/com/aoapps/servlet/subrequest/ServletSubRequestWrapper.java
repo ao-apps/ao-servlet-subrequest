@@ -71,17 +71,17 @@ public class ServletSubRequestWrapper extends ServletRequestWrapper implements I
    * but are not returned as part of all attribute names.
    */
   private static final Set<String> hiddenAttributeNames = Collections.unmodifiableSet(
-    new HashSet<>(
-      Arrays.asList(
-        "org.apache.catalina.core.DISPATCHER_TYPE",
-        "org.apache.catalina.core.DISPATCHER_REQUEST_PATH",
-        "org.apache.catalina.jsp_file",
-        "javax.servlet.include.servlet_path",
-        "javax.servlet.include.request_uri",
-        "javax.servlet.include.context_path",
-        "javax.servlet.include.path_info"
+      new HashSet<>(
+          Arrays.asList(
+              "org.apache.catalina.core.DISPATCHER_TYPE",
+              "org.apache.catalina.core.DISPATCHER_REQUEST_PATH",
+              "org.apache.catalina.jsp_file",
+              "javax.servlet.include.servlet_path",
+              "javax.servlet.include.request_uri",
+              "javax.servlet.include.context_path",
+              "javax.servlet.include.path_info"
+          )
       )
-    )
   );
 
   private Map<String, Object> attributes;
@@ -92,8 +92,8 @@ public class ServletSubRequestWrapper extends ServletRequestWrapper implements I
       logger.finer("name: " + name);
     }
     if (
-      attributes != null
-      && !hiddenAttributeNames.contains(name)
+        attributes != null
+            && !hiddenAttributeNames.contains(name)
     ) {
       return attributes.get(name);
     } else {
@@ -174,6 +174,7 @@ public class ServletSubRequestWrapper extends ServletRequestWrapper implements I
 
   private boolean characterEncodingSet;
   private String characterEncoding;
+
   @Override
   public String getCharacterEncoding() {
     if (characterEncodingSet) {

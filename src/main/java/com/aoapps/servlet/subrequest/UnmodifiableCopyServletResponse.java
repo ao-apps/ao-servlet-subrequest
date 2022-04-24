@@ -40,7 +40,9 @@ import javax.servlet.ServletResponse;
  */
 public class UnmodifiableCopyServletResponse implements ServletResponse {
 
-  protected static class Lock {/* Empty lock class to help heap profile */}
+  protected static class Lock {
+    // Empty lock class to help heap profile
+  }
   protected final Lock lock = new Lock();
 
 //  private final ServletResponse resp;

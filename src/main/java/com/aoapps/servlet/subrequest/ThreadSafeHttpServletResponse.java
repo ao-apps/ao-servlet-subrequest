@@ -45,7 +45,7 @@ public class ThreadSafeHttpServletResponse extends ThreadSafeServletResponse imp
   @Override
   public void setResponse(ServletResponse response) {
     synchronized (lock) {
-      this.resp = (HttpServletResponse)response;
+      this.resp = (HttpServletResponse) response;
       super.setResponse(response);
     }
   }

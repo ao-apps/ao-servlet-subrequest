@@ -45,7 +45,9 @@ import javax.servlet.ServletResponse;
  */
 public class ThreadSafeServletRequest extends ServletRequestWrapper {
 
-  protected static class Lock {/* Empty lock class to help heap profile */}
+  protected static class Lock {
+    // Empty lock class to help heap profile
+  }
   protected final Lock lock = new Lock();
 
   public ThreadSafeServletRequest(ServletRequest req) {
@@ -121,6 +123,7 @@ public class ThreadSafeServletRequest extends ServletRequestWrapper {
   }
 
   private ThreadSafeServletInputStream in;
+
   @Override
   public ThreadSafeServletInputStream getInputStream() throws IOException {
     synchronized (lock) {

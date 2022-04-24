@@ -86,6 +86,7 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
 
   private BufferWriter capturedOut;
   private PrintWriter capturedPW;
+
   @Override
   public PrintWriter getWriter() throws IOException {
     if (capturedOut == null) {

@@ -85,23 +85,23 @@ public class ServletSubRequest implements IServletSubRequest {
    * in Tomcat 7.0 - is this a bug?)
    */
   static final Set<String> hiddenAttributeNames = Collections.unmodifiableSet(
-    new HashSet<>(
-      Arrays.asList(
-        //"org.apache.catalina.core.DISPATCHER_TYPE",
-        //"org.apache.catalina.core.DISPATCHER_REQUEST_PATH",
-        //"org.apache.catalina.jsp_file",
-        RequestDispatcher.INCLUDE_REQUEST_URI,
-        RequestDispatcher.INCLUDE_CONTEXT_PATH,
-        RequestDispatcher.INCLUDE_SERVLET_PATH,
-        RequestDispatcher.INCLUDE_PATH_INFO,
-        RequestDispatcher.INCLUDE_QUERY_STRING,
-        RequestDispatcher.FORWARD_REQUEST_URI,
-        RequestDispatcher.FORWARD_CONTEXT_PATH,
-        RequestDispatcher.FORWARD_SERVLET_PATH,
-        RequestDispatcher.FORWARD_PATH_INFO,
-        RequestDispatcher.FORWARD_QUERY_STRING
+      new HashSet<>(
+          Arrays.asList(
+              //"org.apache.catalina.core.DISPATCHER_TYPE",
+              //"org.apache.catalina.core.DISPATCHER_REQUEST_PATH",
+              //"org.apache.catalina.jsp_file",
+              RequestDispatcher.INCLUDE_REQUEST_URI,
+              RequestDispatcher.INCLUDE_CONTEXT_PATH,
+              RequestDispatcher.INCLUDE_SERVLET_PATH,
+              RequestDispatcher.INCLUDE_PATH_INFO,
+              RequestDispatcher.INCLUDE_QUERY_STRING,
+              RequestDispatcher.FORWARD_REQUEST_URI,
+              RequestDispatcher.FORWARD_CONTEXT_PATH,
+              RequestDispatcher.FORWARD_SERVLET_PATH,
+              RequestDispatcher.FORWARD_PATH_INFO,
+              RequestDispatcher.FORWARD_QUERY_STRING
+          )
       )
-    )
   );
 
   static Map<String, Object> getAllAttributes(ServletRequest req) {
@@ -145,8 +145,8 @@ public class ServletSubRequest implements IServletSubRequest {
     }
     Map<String, Object> a = attributes;
     if (
-      a != null
-      // && !hiddenAttributeNames.contains(name)
+        a != null
+    // && !hiddenAttributeNames.contains(name)
     ) {
       return a.get(name);
     } else {
@@ -200,6 +200,7 @@ public class ServletSubRequest implements IServletSubRequest {
 
   private boolean characterEncodingSet;
   private String characterEncoding;
+
   @Override
   public String getCharacterEncoding() {
     if (characterEncodingSet) {

@@ -49,7 +49,7 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
 
   @Override
   public void setResponse(ServletResponse response) {
-    this.resp = (HttpServletResponse)response;
+    this.resp = (HttpServletResponse) response;
     super.setResponse(response);
   }
 
@@ -89,8 +89,8 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
   @Override
   public boolean containsHeader(String name) {
     return
-      (headers != null && headers.containsKey(name))
-      || resp.containsHeader(name)
+        (headers != null && headers.containsKey(name))
+            || resp.containsHeader(name)
     ;
   }
 

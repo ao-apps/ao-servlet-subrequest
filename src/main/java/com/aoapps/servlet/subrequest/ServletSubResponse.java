@@ -94,15 +94,16 @@ public class ServletSubResponse implements IServletSubResponse {
 
   static BufferWriter newBufferWriter(TempFileContext tempFileContext) {
     return new AutoTempFileWriter(
-      //new SegmentedWriter(),
-      new CharArrayBufferWriter(),
-      tempFileContext,
-      AutoTempFileWriter.DEFAULT_TEMP_FILE_THRESHOLD
+        //new SegmentedWriter(),
+        new CharArrayBufferWriter(),
+        tempFileContext,
+        AutoTempFileWriter.DEFAULT_TEMP_FILE_THRESHOLD
     );
   }
 
   private BufferWriter capturedOut;
   private PrintWriter capturedPW;
+
   @Override
   public PrintWriter getWriter() throws IOException {
     if (capturedOut == null) {

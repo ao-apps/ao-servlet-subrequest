@@ -32,7 +32,9 @@ import javax.servlet.ServletInputStream;
  */
 public class ThreadSafeServletInputStream extends ServletInputStream {
 
-  private static class Lock {/* Empty lock class to help heap profile */}
+  private static class Lock {
+    // Empty lock class to help heap profile
+  }
   private final Lock lock = new Lock();
 
   private final ServletInputStream in;

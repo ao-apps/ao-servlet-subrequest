@@ -49,8 +49,8 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
       return null;
     }
     Cookie[] copy = new Cookie[cookies.length];
-    for (int i=0; i<cookies.length; i++) {
-      copy[i] = (Cookie)cookies[i].clone();
+    for (int i = 0; i < cookies.length; i++) {
+      copy[i] = (Cookie) cookies[i].clone();
     }
     return copy;
   }
@@ -88,14 +88,14 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
       Enumeration<String> headerValues = req.getHeaders(name);
       while (headerValues.hasMoreElements()) {
         values = MinimalList.add(
-          values,
-          headerValues.nextElement()
+            values,
+            headerValues.nextElement()
         );
       }
       newHeaders = MinimalMap.put(
-        newHeaders,
-        name,
-        MinimalList.unmodifiable(values)
+          newHeaders,
+          name,
+          MinimalList.unmodifiable(values)
       );
     }
     headers = MinimalMap.unmodifiable(newHeaders);

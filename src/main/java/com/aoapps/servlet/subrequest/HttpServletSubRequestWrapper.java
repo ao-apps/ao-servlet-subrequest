@@ -50,7 +50,7 @@ public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper imple
 
   @Override
   public void setRequest(ServletRequest request) {
-    this.req = (HttpServletRequest)request;
+    this.req = (HttpServletRequest) request;
     super.setRequest(request);
   }
 

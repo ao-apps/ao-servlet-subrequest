@@ -34,7 +34,9 @@ import javax.servlet.ServletResponseWrapper;
  */
 public class ThreadSafeServletResponse extends ServletResponseWrapper {
 
-  protected static class Lock {/* Empty lock class to help heap profile */}
+  protected static class Lock {
+    // Empty lock class to help heap profile
+  }
   protected final Lock lock = new Lock();
 
   public ThreadSafeServletResponse(ServletResponse resp) {
@@ -70,6 +72,7 @@ public class ThreadSafeServletResponse extends ServletResponseWrapper {
   }
 
   private ThreadSafeServletOutputStream out;
+
   @Override
   public ThreadSafeServletOutputStream getOutputStream() throws IOException {
     synchronized (lock) {
