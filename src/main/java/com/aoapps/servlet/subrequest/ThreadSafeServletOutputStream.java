@@ -35,6 +35,7 @@ public final class ThreadSafeServletOutputStream extends ServletOutputStream {
   private static class Lock {
     // Empty lock class to help heap profile
   }
+
   private final Lock lock = new Lock();
 
   private final ServletOutputStream out;

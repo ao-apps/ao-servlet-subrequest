@@ -23,8 +23,9 @@
 
 package com.aoapps.servlet.subrequest;
 
-import com.aoapps.collections.AoCollections;
 import static com.aoapps.servlet.subrequest.HttpServletSubResponse.formatRFC5322;
+
+import com.aoapps.collections.AoCollections;
 import com.aoapps.tempfiles.TempFileContext;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,8 +91,7 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
   public boolean containsHeader(String name) {
     return
         (headers != null && headers.containsKey(name))
-            || resp.containsHeader(name)
-    ;
+            || resp.containsHeader(name);
   }
 
   @Override
@@ -260,7 +260,10 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * TODO: Case insensitive?
+   * </p>
    */
   @Override
   public String getHeader(String name) {
@@ -275,7 +278,10 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * TODO: Case insensitive?
+   * </p>
    */
   @Override
   public Collection<String> getHeaders(String name) {
@@ -289,7 +295,10 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * TODO: Case insensitive?
+   * </p>
    */
   @Override
   public Collection<String> getHeaderNames() {

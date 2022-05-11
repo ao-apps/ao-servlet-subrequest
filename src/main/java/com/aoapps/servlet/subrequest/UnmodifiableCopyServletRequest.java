@@ -59,6 +59,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
   protected static class Lock {
     // Empty lock class to help heap profile
   }
+
   protected final Lock lock = new Lock();
 
   private final ServletRequest req;

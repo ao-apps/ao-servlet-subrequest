@@ -43,9 +43,10 @@ public class UnmodifiableCopyServletResponse implements ServletResponse {
   protected static class Lock {
     // Empty lock class to help heap profile
   }
+
   protected final Lock lock = new Lock();
 
-//  private final ServletResponse resp;
+  // private final ServletResponse resp;
 
   private final String characterEncoding;
   private final String contentType;
@@ -54,7 +55,7 @@ public class UnmodifiableCopyServletResponse implements ServletResponse {
   private final Locale locale;
 
   public UnmodifiableCopyServletResponse(ServletResponse resp) {
-//    this.resp = resp;
+    // this.resp = resp;
     characterEncoding = resp.getCharacterEncoding();
     contentType = resp.getContentType();
     bufferSize = resp.getBufferSize();

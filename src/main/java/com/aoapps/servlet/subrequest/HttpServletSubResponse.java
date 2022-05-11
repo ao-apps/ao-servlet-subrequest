@@ -95,8 +95,7 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
   public boolean containsHeader(String name) {
     return
         (headers != null && headers.containsKey(name))
-            || resp.containsHeader(name)
-    ;
+            || resp.containsHeader(name);
   }
 
   @Override
@@ -282,7 +281,10 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * TODO: Case insensitive?
+   * </p>
    */
   @Override
   public String getHeader(String name) {
@@ -297,7 +299,10 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * TODO: Case insensitive?
+   * </p>
    */
   @Override
   public Collection<String> getHeaders(String name) {
@@ -311,7 +316,10 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * TODO: Case insensitive?
+   * </p>
    */
   @Override
   public Collection<String> getHeaderNames() {

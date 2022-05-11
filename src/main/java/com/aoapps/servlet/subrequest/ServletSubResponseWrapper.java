@@ -85,17 +85,17 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
   }
 
   private BufferWriter capturedOut;
-  private PrintWriter capturedPW;
+  private PrintWriter capturedWriter;
 
   @Override
   public PrintWriter getWriter() throws IOException {
     if (capturedOut == null) {
       capturedOut = ServletSubResponse.newBufferWriter(tempFileContext);
     }
-    if (capturedPW == null) {
-      capturedPW = new PrintWriter(capturedOut);
+    if (capturedWriter == null) {
+      capturedWriter = new PrintWriter(capturedOut);
     }
-    return capturedPW;
+    return capturedWriter;
   }
 
   @Override
@@ -105,7 +105,7 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
     } else {
       capturedOut.close();
       BufferResult result = capturedOut.getResult();
-      capturedPW = null;
+      capturedWriter = null;
       capturedOut = null;
       return result;
     }
@@ -146,8 +146,8 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
 
   @Override
   public void flushBuffer() throws IOException {
-    if (capturedPW != null) {
-      capturedPW.flush();
+    if (capturedWriter != null) {
+      capturedWriter.flush();
     }
     committed = true;
   }
@@ -169,9 +169,9 @@ public class ServletSubResponseWrapper extends ServletResponseWrapper implements
     if (committed) {
       throw new IllegalStateException("Concurrent response already committed");
     }
-    if (capturedPW != null) {
-      capturedPW.close();
-      capturedPW = null;
+    if (capturedWriter != null) {
+      capturedWriter.close();
+      capturedWriter = null;
     }
     if (capturedOut != null) {
       try {

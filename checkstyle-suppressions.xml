@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
+Copyright (C) 2022  AO Industries, Inc.
+    support@aoindustries.com
+    7262 Bull Pen Cir
+    Mobile, AL 36695
+
+This file is part of ao-servlet-subrequest.
+
+ao-servlet-subrequest is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ao-servlet-subrequest is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with ao-servlet-subrequest.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE suppressions PUBLIC
+  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+
+  <!-- TODO: Complete Javadocs -->
+  <suppress checks="(MissingJavadocMethod|MissingJavadocType|SummaryJavadoc)" />
+
+  <!-- Allowing "I" prefix to denote interface -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]servlet[/\\]subrequest[/\\]IHttpServletSubRequest\.java$"
+    message="'IHttpServletSubRequest'"
+  />
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]servlet[/\\]subrequest[/\\]IHttpServletSubResponse\.java$"
+    message="'IHttpServletSubResponse'"
+  />
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]servlet[/\\]subrequest[/\\]IServletSubRequest\.java$"
+    message="'IServletSubRequest'"
+  />
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]servlet[/\\]subrequest[/\\]IServletSubResponse\.java$"
+    message="'IServletSubResponse'"
+  />
+
+  <!-- Will continue using "RFC" prefix -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]servlet[/\\]subrequest[/\\]HttpServletSubResponse\.java$"
+    message="'formatRFC5322'"
+  />
+
+  <!-- Consistency with standard "URLDecoder", "URLEncoder", and "URL" -->
+  <suppress
+    checks="AbbreviationAsWordInName"
+    files="[/\\]com[/\\]aoapps[/\\]servlet[/\\]subrequest[/\\]UnmodifiableCopyHttpServletRequest\.java$"
+    message="'(requestURI|requestedSessionIdFromURL)'"
+  />
+
+</suppressions>

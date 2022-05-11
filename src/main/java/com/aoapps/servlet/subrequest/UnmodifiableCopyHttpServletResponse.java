@@ -164,7 +164,10 @@ public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServlet
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * TODO: Case insensitive?
+   * </p>
    */
   @Override
   public Collection<String> getHeaders(String name) {

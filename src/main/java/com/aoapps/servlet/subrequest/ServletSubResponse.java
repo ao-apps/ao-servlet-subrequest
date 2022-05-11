@@ -62,14 +62,14 @@ import org.apache.commons.lang3.NotImplementedException;
  */
 public class ServletSubResponse implements IServletSubResponse {
 
-//  private final ServletResponse resp;
+  // private final ServletResponse resp;
   private final TempFileContext tempFileContext;
   private String characterEncoding;
   private String contentType;
   private Locale locale;
 
   public ServletSubResponse(ServletResponse resp, TempFileContext tempFileContext) {
-//    this.resp = resp;
+    // this.resp = resp;
     this.tempFileContext = tempFileContext;
     characterEncoding = resp.getCharacterEncoding();
     contentType = resp.getContentType();
@@ -102,17 +102,17 @@ public class ServletSubResponse implements IServletSubResponse {
   }
 
   private BufferWriter capturedOut;
-  private PrintWriter capturedPW;
+  private PrintWriter capturedWriter;
 
   @Override
   public PrintWriter getWriter() throws IOException {
     if (capturedOut == null) {
       capturedOut = newBufferWriter(tempFileContext);
     }
-    if (capturedPW == null) {
-      capturedPW = new PrintWriter(capturedOut);
+    if (capturedWriter == null) {
+      capturedWriter = new PrintWriter(capturedOut);
     }
-    return capturedPW;
+    return capturedWriter;
   }
 
   @Override
@@ -122,7 +122,7 @@ public class ServletSubResponse implements IServletSubResponse {
     } else {
       capturedOut.close();
       BufferResult result = capturedOut.getResult();
-      capturedPW = null;
+      capturedWriter = null;
       capturedOut = null;
       return result;
     }
@@ -163,8 +163,8 @@ public class ServletSubResponse implements IServletSubResponse {
 
   @Override
   public void flushBuffer() throws IOException {
-    if (capturedPW != null) {
-      capturedPW.flush();
+    if (capturedWriter != null) {
+      capturedWriter.flush();
     }
     committed = true;
   }
@@ -186,9 +186,9 @@ public class ServletSubResponse implements IServletSubResponse {
     if (committed) {
       throw new IllegalStateException("Concurrent response already committed");
     }
-    if (capturedPW != null) {
-      capturedPW.close();
-      capturedPW = null;
+    if (capturedWriter != null) {
+      capturedWriter.close();
+      capturedWriter = null;
     }
     if (capturedOut != null) {
       try {
