@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -48,26 +48,21 @@ import javax.servlet.ServletRequestWrapper;
 import javax.servlet.ServletResponse;
 
 /**
- * <p>
  * <b>This does not implement {@link ServletRequestWrapper} and use of it is in violation
  * of the specification.</b>  When used in conjunction with new threads (or threads
  * from your own pool), Tomcat 7.0 and 8.5 do not notice you switched the request due to its
  * use of ThreadLocal to enforce the spec.  This is very hackish and fragile - use at
  * your own risk.
- * </p>
- * <p>
- * Wraps a servlet request with the intent to operate as a concurrent sub request.
+ *
+ * <p>Wraps a servlet request with the intent to operate as a concurrent sub request.
  * Any changes made to the request will only affect this request and will not be passed
- * along to the wrapped request.
- * </p>
- * <p>
- * It is expected that the wrapped request will not change for the life of this wrapper.
+ * along to the wrapped request.</p>
+ *
+ * <p>It is expected that the wrapped request will not change for the life of this wrapper.
  * If it does change, the changes may or may not be visible depending on what has been
- * accessed and changed on this request.
- * </p>
- * <p>
- * This class is not thread safe.
- * </p>
+ * accessed and changed on this request.</p>
+ *
+ * <p>This class is not thread safe.</p>
  */
 public class ServletSubRequest implements IServletSubRequest {
 

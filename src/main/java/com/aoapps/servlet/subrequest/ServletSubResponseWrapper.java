@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -37,18 +37,14 @@ import javax.servlet.ServletResponseWrapper;
 import org.apache.commons.lang3.NotImplementedException;
 
 /**
- * <p>
  * Wraps a servlet response with the intent to operate as a concurrent sub response.
  * Any changes made to the response will only affect this response and will not be passed
  * along to the wrapped response.
- * </p>
- * <p>
- * The wrapped response may change state while this sub response is being processed.
- * Any changes to the wrapped response will not affect this concurrent sub response.
- * </p>
- * <p>
- * This class is not thread safe.
- * </p>
+ *
+ * <p>The wrapped response may change state while this sub response is being processed.
+ * Any changes to the wrapped response will not affect this concurrent sub response.</p>
+ *
+ * <p>This class is not thread safe.</p>
  */
 public class ServletSubResponseWrapper extends ServletResponseWrapper implements IServletSubResponse {
 

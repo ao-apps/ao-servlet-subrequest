@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -32,11 +32,10 @@ import javax.servlet.ServletResponse;
 /**
  * Achieves thread safety by making copies of most fields during constructor and being unmodifiable.
  * This forms a base point for subrequests to diverge from.
- * <p>
- * Some methods have to read-through to the wrapped response, so it should not change
+ *
+ * <p>Some methods have to read-through to the wrapped response, so it should not change
  * state while this wrapper is in use.
- * Synchronizes access to the wrapped response.
- * </p>
+ * Synchronizes access to the wrapped response.</p>
  */
 public class UnmodifiableCopyServletResponse implements ServletResponse {
 

@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,11 +27,10 @@ import javax.servlet.ServletRequest;
 
 /**
  * Indicates that a request is protected for use as a sub-request.
- * <p>
- * TODO: Create a subrequest lifecycle much like a normal request?
+ *
+ * <p>TODO: Create a subrequest lifecycle much like a normal request?
  * Initialize the subrequest in a standard way?
- * Add ServletSubrequestListener?
- * </p>
+ * Add ServletSubrequestListener?</p>
  */
 @SuppressWarnings("MarkerInterface") // No additional methods yet
 public interface IServletSubRequest extends ServletRequest {

@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -165,9 +165,8 @@ public class UnmodifiableCopyHttpServletResponse extends UnmodifiableCopyServlet
 
   /**
    * {@inheritDoc}
-   * <p>
-   * TODO: Case insensitive?
-   * </p>
+   *
+   * <p>TODO: Case insensitive?</p>
    */
   @Override
   public Collection<String> getHeaders(String name) {
