@@ -89,7 +89,7 @@ public class ServletSubResponse implements IServletSubResponse {
 
   static BufferWriter newBufferWriter(TempFileContext tempFileContext) {
     return new AutoTempFileWriter(
-        //new SegmentedWriter(),
+        // new SegmentedWriter(),
         new CharArrayBufferWriter(),
         tempFileContext,
         AutoTempFileWriter.DEFAULT_TEMP_FILE_THRESHOLD
