@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,6 +27,9 @@ import static com.aoapps.servlet.subrequest.HttpServletSubResponse.formatRFC5322
 
 import com.aoapps.collections.AoCollections;
 import com.aoapps.tempfiles.TempFileContext;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,9 +38,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper implements IHttpServletSubResponse {
 
@@ -102,18 +102,6 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
   @Override
   public String encodeRedirectURL(String url) {
     return resp.encodeRedirectURL(url);
-  }
-
-  @Deprecated(forRemoval = false)
-  @Override
-  public String encodeUrl(String url) {
-    return resp.encodeUrl(url);
-  }
-
-  @Deprecated(forRemoval = false)
-  @Override
-  public String encodeRedirectUrl(String url) {
-    return resp.encodeRedirectUrl(url);
   }
 
   private int statusCode = Integer.MIN_VALUE; // Read-through when MIN_VALUE
@@ -236,16 +224,6 @@ public class HttpServletSubResponseWrapper extends ServletSubResponseWrapper imp
     // Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
     if (!committed) {
       this.statusCode = sc;
-    }
-  }
-
-  @Deprecated(forRemoval = false)
-  @Override
-  public void setStatus(int sc, String sm) {
-    // Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
-    if (!committed) {
-      this.statusCode = sc;
-      this.statusMessage = sm;
     }
   }
 

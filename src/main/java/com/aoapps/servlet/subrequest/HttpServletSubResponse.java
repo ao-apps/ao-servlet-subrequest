@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,6 +25,8 @@ package com.aoapps.servlet.subrequest;
 
 import com.aoapps.collections.AoCollections;
 import com.aoapps.tempfiles.TempFileContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,8 +41,6 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 public class HttpServletSubResponse extends ServletSubResponse implements IHttpServletSubResponse {
 
@@ -106,18 +106,6 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
   @Override
   public String encodeRedirectURL(String url) {
     return resp.encodeRedirectURL(url);
-  }
-
-  @Deprecated(forRemoval = false)
-  @Override
-  public String encodeUrl(String url) {
-    return resp.encodeUrl(url);
-  }
-
-  @Deprecated(forRemoval = false)
-  @Override
-  public String encodeRedirectUrl(String url) {
-    return resp.encodeRedirectUrl(url);
   }
 
   private int statusCode = Integer.MIN_VALUE; // Read-through when MIN_VALUE
@@ -257,16 +245,6 @@ public class HttpServletSubResponse extends ServletSubResponse implements IHttpS
     // Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
     if (!committed) {
       this.statusCode = sc;
-    }
-  }
-
-  @Deprecated(forRemoval = false)
-  @Override
-  public void setStatus(int sc, String sm) {
-    // Docs make no mention of committed status, so we'll ignore on committed response as seems to behave
-    if (!committed) {
-      this.statusCode = sc;
-      this.statusMessage = sm;
     }
   }
 

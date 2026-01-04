@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2019, 2021, 2022, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -24,8 +24,8 @@
 package com.aoapps.servlet.subrequest;
 
 import com.aoapps.io.buffer.BufferResult;
+import jakarta.servlet.ServletResponse;
 import java.io.IOException;
-import javax.servlet.ServletResponse;
 
 /**
  * Indicates that a response is protected for use as a sub-response.

@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -24,6 +24,14 @@
 package com.aoapps.servlet.subrequest;
 
 import com.aoapps.collections.AoCollections;
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConnection;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -36,13 +44,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import org.apache.commons.lang3.NotImplementedException;
 
 /**
@@ -84,6 +85,9 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
   private final int localPort;
   private final ServletContext servletContext;
   private final DispatcherType dispatcherType;
+  private final String requestId;
+  private volatile String protocolRequestId;
+  private volatile ServletConnection servletConnection;
 
   public UnmodifiableCopyServletRequest(ServletRequest req) {
     this.req = req;
@@ -111,6 +115,7 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
     localPort = req.getLocalPort();
     servletContext = req.getServletContext();
     dispatcherType = req.getDispatcherType();
+    requestId = req.getRequestId();
   }
 
   @Override
@@ -261,15 +266,6 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
     }
   }
 
-  @Deprecated(forRemoval = false)
-  @Override
-  public String getRealPath(String path) {
-    // TODO: Cache here?
-    synchronized (lock) {
-      return req.getRealPath(path);
-    }
-  }
-
   @Override
   public int getRemotePort() {
     return remotePort;
@@ -331,5 +327,36 @@ public class UnmodifiableCopyServletRequest implements ServletRequest {
   @Override
   public DispatcherType getDispatcherType() {
     return dispatcherType;
+  }
+
+  @Override
+  public String getRequestId() {
+    return requestId;
+  }
+
+  @Override
+  @SuppressWarnings("DoubleCheckedLocking") // Safe: protocolRequestId is volatile
+  public String getProtocolRequestId() {
+    if (protocolRequestId == null) {
+      synchronized (lock) {
+        if (protocolRequestId == null) {
+          protocolRequestId = req.getProtocolRequestId();
+        }
+      }
+    }
+    return protocolRequestId;
+  }
+
+  @Override
+  @SuppressWarnings("DoubleCheckedLocking") // Safe: servletConnection is volatile
+  public ServletConnection getServletConnection() {
+    if (servletConnection == null) {
+      synchronized (lock) {
+        if (servletConnection == null) {
+          servletConnection = req.getServletConnection();
+        }
+      }
+    }
+    return servletConnection;
   }
 }

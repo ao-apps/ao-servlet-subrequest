@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,6 +23,15 @@
 
 package com.aoapps.servlet.subrequest;
 
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConnection;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletRequestWrapper;
+import jakarta.servlet.ServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -38,14 +47,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestWrapper;
-import javax.servlet.ServletResponse;
 
 /**
  * <b>This does not implement {@link ServletRequestWrapper} and use of it is in violation
@@ -307,12 +308,6 @@ public class ServletSubRequest implements IServletSubRequest {
     return req.getRequestDispatcher(path);
   }
 
-  @Deprecated(forRemoval = false)
-  @Override
-  public String getRealPath(String path) {
-    return req.getRealPath(path);
-  }
-
   @Override
   public int getRemotePort() {
     return req.getRemotePort();
@@ -366,5 +361,20 @@ public class ServletSubRequest implements IServletSubRequest {
   @Override
   public DispatcherType getDispatcherType() {
     return req.getDispatcherType();
+  }
+
+  @Override
+  public String getRequestId() {
+    return req.getRequestId();
+  }
+
+  @Override
+  public String getProtocolRequestId() {
+    return req.getProtocolRequestId();
+  }
+
+  @Override
+  public ServletConnection getServletConnection() {
+    return req.getServletConnection();
   }
 }

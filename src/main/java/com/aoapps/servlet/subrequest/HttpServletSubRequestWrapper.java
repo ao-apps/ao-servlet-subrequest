@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,18 +23,21 @@
 
 package com.aoapps.servlet.subrequest;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletMapping;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpUpgradeHandler;
+import jakarta.servlet.http.Part;
+import jakarta.servlet.http.PushBuilder;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Enumeration;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUpgradeHandler;
-import javax.servlet.http.Part;
+import java.util.Map;
 import org.apache.commons.lang3.NotImplementedException;
 
 public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper implements IHttpServletSubRequest {
@@ -89,6 +92,11 @@ public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper imple
     return req.getIntHeader(name);
   }
 
+  @Override
+  public HttpServletMapping getHttpServletMapping() {
+    return req.getHttpServletMapping();
+  }
+
   private String method;
 
   @Override
@@ -112,6 +120,12 @@ public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper imple
   @Override
   public String getPathTranslated() {
     return req.getPathTranslated();
+  }
+
+  @Override
+  public PushBuilder newPushBuilder() {
+    // Not supported on subrequests
+    return null;
   }
 
   @Override
@@ -189,12 +203,6 @@ public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper imple
     return req.isRequestedSessionIdFromURL();
   }
 
-  @Deprecated(forRemoval = false)
-  @Override
-  public boolean isRequestedSessionIdFromUrl() {
-    return req.isRequestedSessionIdFromUrl();
-  }
-
   @Override
   public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
     throw new NotImplementedException("TODO");
@@ -228,5 +236,15 @@ public class HttpServletSubRequestWrapper extends ServletSubRequestWrapper imple
   @Override
   public <T extends HttpUpgradeHandler> T upgrade(Class<T> type) throws IOException, ServletException {
     return req.upgrade(type);
+  }
+
+  @Override
+  public Map<String, String> getTrailerFields() {
+    return req.getTrailerFields();
+  }
+
+  @Override
+  public boolean isTrailerFieldsReady() {
+    return req.isTrailerFieldsReady();
   }
 }

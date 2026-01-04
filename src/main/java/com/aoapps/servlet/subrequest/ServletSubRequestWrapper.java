@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,6 +23,11 @@
 
 package com.aoapps.servlet.subrequest;
 
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletRequestWrapper;
+import jakarta.servlet.ServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -37,11 +42,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.AsyncContext;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestWrapper;
-import javax.servlet.ServletResponse;
 
 /**
  * Wraps a servlet request with the intent to operate as a concurrent sub request.
@@ -72,10 +72,10 @@ public class ServletSubRequestWrapper extends ServletRequestWrapper implements I
               "org.apache.catalina.core.DISPATCHER_TYPE",
               "org.apache.catalina.core.DISPATCHER_REQUEST_PATH",
               "org.apache.catalina.jsp_file",
-              "javax.servlet.include.servlet_path",
-              "javax.servlet.include.request_uri",
-              "javax.servlet.include.context_path",
-              "javax.servlet.include.path_info"
+              "jakarta.servlet.include.servlet_path",
+              "jakarta.servlet.include.request_uri",
+              "jakarta.servlet.include.context_path",
+              "jakarta.servlet.include.path_info"
           )
       )
   );

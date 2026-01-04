@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -25,6 +25,15 @@ package com.aoapps.servlet.subrequest;
 
 import com.aoapps.collections.MinimalList;
 import com.aoapps.collections.MinimalMap;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletMapping;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpUpgradeHandler;
+import jakarta.servlet.http.Part;
+import jakarta.servlet.http.PushBuilder;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -33,13 +42,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUpgradeHandler;
-import javax.servlet.http.Part;
 import org.apache.commons.lang3.NotImplementedException;
 
 public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletRequest implements HttpServletRequest {
@@ -162,6 +164,14 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
   }
 
   @Override
+  public HttpServletMapping getHttpServletMapping() {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.getHttpServletMapping();
+    }
+  }
+
+  @Override
   public String getMethod() {
     return method;
   }
@@ -174,6 +184,12 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
   @Override
   public String getPathTranslated() {
     return pathTranslated;
+  }
+
+  @Override
+  public PushBuilder newPushBuilder() {
+    // Not supported on subrequests
+    return null;
   }
 
   @Override
@@ -266,12 +282,6 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
     return requestedSessionIdFromURL;
   }
 
-  @Deprecated(forRemoval = false)
-  @Override
-  public boolean isRequestedSessionIdFromUrl() {
-    return requestedSessionIdFromURL;
-  }
-
   @Override
   public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
     throw new NotImplementedException("TODO");
@@ -314,6 +324,22 @@ public class UnmodifiableCopyHttpServletRequest extends UnmodifiableCopyServletR
     // TODO: Cache?
     synchronized (lock) {
       return req.upgrade(type);
+    }
+  }
+
+  @Override
+  public Map<String, String> getTrailerFields() {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.getTrailerFields();
+    }
+  }
+
+  @Override
+  public boolean isTrailerFieldsReady() {
+    // TODO: Cache?
+    synchronized (lock) {
+      return req.isTrailerFieldsReady();
     }
   }
 }

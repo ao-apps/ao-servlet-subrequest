@@ -1,6 +1,6 @@
 /*
  * ao-servlet-subrequest - Servlet sub-request wrappers with optional concurrency.
- * Copyright (C) 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2016, 2019, 2020, 2021, 2022, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,6 +23,14 @@
 
 package com.aoapps.servlet.subrequest;
 
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConnection;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletRequestWrapper;
+import jakarta.servlet.ServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,13 +40,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestWrapper;
-import javax.servlet.ServletResponse;
 
 /**
  * Synchronizes access to the wrapped request.
@@ -255,14 +256,6 @@ public class ThreadSafeServletRequest extends ServletRequestWrapper {
     }
   }
 
-  @Deprecated(forRemoval = false)
-  @Override
-  public String getRealPath(String path) {
-    synchronized (lock) {
-      return super.getRealPath(path);
-    }
-  }
-
   @Override
   public int getRemotePort() {
     synchronized (lock) {
@@ -352,6 +345,27 @@ public class ThreadSafeServletRequest extends ServletRequestWrapper {
   public DispatcherType getDispatcherType() {
     synchronized (lock) {
       return super.getDispatcherType();
+    }
+  }
+
+  @Override
+  public String getRequestId() {
+    synchronized (lock) {
+      return super.getRequestId();
+    }
+  }
+
+  @Override
+  public String getProtocolRequestId() {
+    synchronized (lock) {
+      return super.getProtocolRequestId();
+    }
+  }
+
+  @Override
+  public ServletConnection getServletConnection() {
+    synchronized (lock) {
+      return super.getServletConnection();
     }
   }
 }
