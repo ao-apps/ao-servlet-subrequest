@@ -33,7 +33,7 @@ public interface IHttpServletSubRequest extends IServletSubRequest, HttpServletR
   void setMethod(String method);
 
   /**
-   * Checks if {@link #logout()} was called during the subrequest.
+   * Checks if {@link IHttpServletSubRequest#logout()} was called during the subrequest.
    */
   boolean isLoggedOut();
 }
