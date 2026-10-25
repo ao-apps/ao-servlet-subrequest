@@ -21,7 +21,6 @@
  * along with ao-servlet-subrequest.  If not, see <https://www.gnu.org/licenses/>.
  */
 module com.aoapps.servlet.subrequest {
-  exports com.aoapps.servlet.subrequest;
   // Direct
   requires com.aoapps.collections; // <groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
   requires com.aoapps.io.buffer; // <groupId>com.aoapps</groupId><artifactId>ao-io-buffer</artifactId>
@@ -30,4 +29,6 @@ module com.aoapps.servlet.subrequest {
   requires jakarta.servlet; // <groupId>jakarta.servlet</groupId><artifactId>jakarta.servlet-api</artifactId>
   // Java SE
   requires java.logging;
+
+  exports com.aoapps.servlet.subrequest;
 }
